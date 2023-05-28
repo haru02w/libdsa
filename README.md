@@ -1,4 +1,6 @@
-Data Structure and Algorithms Library for future reference
+Data Structure and Algorithms Library
+
+[Coding Style](docs/coding_style.md)
 
 #### TODO
 - [ ] Arrays
@@ -44,3 +46,5 @@ Data Structure and Algorithms Library for future reference
 - [ ] Matrix
 - [ ] Graph
 * More stuff will be added as we learn
+
+Made with ❤  for CS students
