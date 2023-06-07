@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <dsa.h>
 
 void dsPrintHelloWorld()
 {

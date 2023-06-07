@@ -1,35 +1,57 @@
-
 CC=gcc
 AR=ar
 CFLAGS=-g -Wall
 
 SRC_DIR=src
 OBJ_DIR=obj
-TEST_DIR=tests
 INCLUDE_DIR=include
 BUILD_DIR=build
-LIB_DIR=.
+TEST_DIR=tests
 
-SRCS=$(shell find $(SRC_DIR) -name '*.c')
+ALL_DIRS=$(SRC_DIR) $(OBJ_DIR) $(INCLUDE_DIR) \
+			$(BUILD_DIR) $(TEST_DIR) $(BUILD_DIR)/$(TEST_DIR)\
+			$(OBJ_DIR)/$(TEST_DIR)
+
+SRCS=$(shell find $(SRC_DIR) -name '*.c' | sort $1)
 OBJS=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
-TESTS=$(shell find $(TEST_DIR) -name '*.c')
-LIB=$(LIB_DIR)/libdsa.a
+TESTS=$(shell find $(TEST_DIR) -name '*.c' | sort $1)
+TEST_OBJS=$(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/$(TEST_DIR)/%.o,$(TESTS))
+
+TEST_BINS=$(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/$(TEST_DIR)/%,$(TESTS))
+LIB=$(BUILD_DIR)/libdsa.a
+
+LDFLAGS=-L$(BUILD_DIR) -l$(patsubst lib%,%,$(basename $(notdir $(LIB))))
+INCFLAGS=-I$(INCLUDE_DIR)
 
 .PHONY: all test clean
 
-all:$(LIB)
+all: dir $(LIB) 
 
 $(LIB): $(OBJS)
 	$(AR) rcs $(LIB) $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
-test: $(LIB) $(TESTS)
-	$(CC) $(CFLAGS) $(TESTS) -I$(INCLUDE_DIR) -L$(LIB_DIR) -l$(patsubst lib%,%,$(basename $(notdir $(LIB)))) -o $(BUILD_DIR)/$@
+test: all $(TEST_BINS)
+	@for test in $(TEST_BINS) ; do \
+		echo "-- Running test: $$test"; \
+		if ! $$test; then \
+            echo "Error code: $$?"; \
+            break; \
+        fi; \
+	done
 
-run: test
-	@$(BUILD_DIR)/test
+$(BUILD_DIR)/$(TEST_DIR)/%: $(OBJ_DIR)/$(TEST_DIR)/%.o
+	$(CC) $< $(CFLAGS) $(LDFLAGS) $(INCFLAGS) -o $@
+
+$(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.c
+	$(CC) $< $(CFLAGS) $(INCFLAGS) -c  -o $@
+
+dir: $(ALL_DIRS)
+
+$(ALL_DIRS):
+	@mkdir -p $@
 
 clean:
-	rm -rf $(OBJ_DIR)/* $(BUILD_DIR)/* $(LIB)
+	rm -rf $(OBJ_DIR)/*.o $(BUILD_DIR)/* $(LIB)
