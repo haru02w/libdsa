@@ -69,8 +69,8 @@ void dsBSTInsertNode(dsBinaryTree_t **root, void *new_value,
                 dsBSTInsertNode(&(*root)->right, new_data, compare);
 }*/
 
-dsBinaryTree_t *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
-                                int (*compare)(const void *, const void *))
+void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
+                      int (*compare)(const void *, const void *))
 {
         dsBinaryTree_t *target_node = *root;
         dsBinaryTree_t *prev = target_node;
@@ -81,6 +81,7 @@ dsBinaryTree_t *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
                 return NULL;
 
         dsBinaryTree_t *child_node = NULL;
+        void *target_value = target_node->value;
         
         if(target_node->right == NULL || target_node->left == NULL) {
                 if(target_node->right == NULL)
@@ -90,7 +91,8 @@ dsBinaryTree_t *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
 
                 if(target_node == prev) {
                         *root = child_node;
-                        return target_node;
+                        free(target_node);
+                        return target_value;
                 }
 
                 if(target_node == prev->left)
@@ -98,7 +100,9 @@ dsBinaryTree_t *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
                 else
                         prev->right = child_node;
 
-                return target_node;
+                free(target_node);
+
+                return target_value;
         }
 
         child_node = target_node->right;
@@ -114,11 +118,11 @@ dsBinaryTree_t *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
         else
                 target_node->right = child_node->right;
 
-        void *tmp_value = target_node->value;
         target_node->value = child_node->value;
-        child_node->value = tmp_value;
 
-        return child_node; 
+        free(child_node);
+
+        return target_value; 
 }
 
 void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,

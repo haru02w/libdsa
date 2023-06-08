@@ -38,15 +38,15 @@ int main(int argc, char *argv[])
 
         puts("\nTesting remove function...");
 
-        free(dsBSTRemoveNode(&root, &value_1, comparator));
+        dsBSTRemoveNode(&root, &value_1, comparator);
         dsBiTreeInTraversal(root, printFunction);
         puts("");
 
-        free(dsBSTRemoveNode(&root, &value_3, comparator));
+        dsBSTRemoveNode(&root, &value_3, comparator);
         dsBiTreeInTraversal(root, printFunction);
         puts("");
 
-        free(dsBSTRemoveNode(&root, &value_2, comparator));
+        dsBSTRemoveNode(&root, &value_2, comparator);
         dsBiTreeInTraversal(root, printFunction);
         puts("");
 
