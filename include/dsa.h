@@ -15,4 +15,15 @@ void dsBiTreePostTraversal(dsBinaryTree_t *node, void (*fn)(void *));
 
 // TODO: Breadth First Traversal, Depth First Traversals
 
+
+// Binary search tree node insertion
+void dsBSTInsertNode(dsBinaryTree_t **node, void *value, int (*compare)(const void *, const void *));
+
+// Binary search tree node removal
+void *dsBSTRemoveNode(dsBinaryTree_t **node, void *key, int (*compare)(const void *, const void *));
+
+// Binary search tree node search
+void *dsBSTSearchNode(dsBinaryTree_t *node, void *key, int (*compare)(const void *, const void *));
+
+
 #endif // !DSA_H_
