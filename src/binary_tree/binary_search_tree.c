@@ -1,19 +1,19 @@
 #include "./binary_tree.h"
 #include <stdlib.h>
 
-dsBinaryTree_t *dsBSTCreateNode(void *value) 
+static dsBinaryTree_t *dsBSTCreateNode(void *value) 
 {
-        dsBinaryTree_t *newNode = (dsBinaryTree_t *) malloc(sizeof(dsBinaryTree_t));
+        dsBinaryTree_t *new_node = (dsBinaryTree_t *) malloc(sizeof(dsBinaryTree_t));
 
-        newNode->value = value;
-        newNode->height = 1;
-        newNode->right = NULL;
-        newNode->left = NULL;
+        new_node->value = value;
+        new_node->height = 1;
+        new_node->right = NULL;
+        new_node->left = NULL;
 
-        return newNode;
+        return new_node;
 }
 
-void dsBSTFindNodeSpot(dsBinaryTree_t **current_node, 
+static void dsBSTFindNodeSpot(dsBinaryTree_t **current_node, 
                        dsBinaryTree_t **prev_node, void *key, 
                        int (*compare)(const void *, const void *)) 
 {
@@ -45,7 +45,11 @@ void dsBSTInsertNode(dsBinaryTree_t **root, void *new_value,
 
         dsBSTFindNodeSpot(&temp, &prev, new_value, compare);
 
-        if(compare(new_value, prev->value) < 0)
+        int compare_result = compare(new_value, prev->value);
+
+        if(compare_result == 0)
+                return;
+        else if(compare_result < 0)
                 prev->left = dsBSTCreateNode(new_value);
         else
                 prev->right = dsBSTCreateNode(new_value);
@@ -65,8 +69,8 @@ void dsBSTInsertNode(dsBinaryTree_t **root, void *new_value,
                 dsBSTInsertNode(&(*root)->right, new_data, compare);
 }*/
 
-void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
-                     int (*compare)(const void *, const void *))
+dsBinaryTree_t *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
+                                int (*compare)(const void *, const void *))
 {
         dsBinaryTree_t *target_node = *root;
         dsBinaryTree_t *prev = target_node;
@@ -77,7 +81,6 @@ void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
                 return NULL;
 
         dsBinaryTree_t *child_node = NULL;
-        void *target_value = target_node->value; 
         
         if(target_node->right == NULL || target_node->left == NULL) {
                 if(target_node->right == NULL)
@@ -87,8 +90,7 @@ void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
 
                 if(target_node == prev) {
                         *root = child_node;
-                        free(target_node);
-                        return target_value;
+                        return target_node;
                 }
 
                 if(target_node == prev->left)
@@ -96,9 +98,7 @@ void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
                 else
                         prev->right = child_node;
 
-                free(target_node);
-
-                return target_value;
+                return target_node;
         }
 
         child_node = target_node->right;
@@ -114,11 +114,11 @@ void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
         else
                 target_node->right = child_node->right;
 
+        void *tmp_value = target_node->value;
         target_node->value = child_node->value;
+        child_node->value = tmp_value;
 
-        free(child_node);
-
-        return target_value; 
+        return child_node; 
 }
 
 void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,
