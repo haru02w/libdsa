@@ -19,6 +19,15 @@ dsSLinkedList_t *dsNewSLL()
 	return NULL;
 }
 
+void dsDestroySLL(dsSLinkedList_t **head)
+{
+	while (*head != NULL) {
+		dsSLinkedList_t *tmp = *head;
+		*head = (*head)->next;
+		free(tmp);
+	}
+}
+
 void dsSLLTraversal(dsSLinkedList_t *node, void (*fn)(void *))
 {
 	for (; node != NULL; node = node->next)
@@ -83,7 +92,7 @@ bool dsSLLInsertNodeSorted(dsSLinkedList_t **head, void *value,
 }
 
 void *dsSLLRemove(dsSLinkedList_t **head, void *value,
-			  int (*compare)(const void *, const void *))
+		  int (*compare)(const void *, const void *))
 {
 	if (*head == NULL)
 		return NULL;
