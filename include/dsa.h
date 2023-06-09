@@ -25,5 +25,10 @@ void *dsBSTRemoveNode(dsBinaryTree_t **node, void *key, int (*compare)(const voi
 // Binary search tree node search
 void *dsBSTSearchNode(dsBinaryTree_t *node, void *key, int (*compare)(const void *, const void *));
 
+// Binary tree insertion with avl rotation
+void dsAVLInsertNode(dsBinaryTree_t **node, void *value, int (*compare)(const void *, const void *));
+
+// Binary tree removal with avl rotation
+void dsAVLRemoveNode(dsBinaryTree_t **node, void *key, int (*compare)(const void *, const void *));
 
 #endif // !DSA_H_
