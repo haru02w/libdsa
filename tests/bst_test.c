@@ -2,12 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+<<<<<<< HEAD
 static inline int comparator(const void *data_1, const void *data_2) 
+=======
+static int comparator(const void *data_1, const void *data_2) 
+>>>>>>> master
 {
         return *(int *)data_1 - *(int *)data_2;
 }
 
+<<<<<<< HEAD
 static inline void printFunction(void *value)
+=======
+static void printFunction(void *value)
+>>>>>>> master
 {
         printf("%d ", *(int *)value);
 }

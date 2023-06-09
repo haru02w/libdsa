@@ -31,6 +31,7 @@ $(LIB): $(OBJS)
 	$(AR) rcs $(LIB) $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 test: all $(TEST_BINS)
@@ -46,6 +47,7 @@ $(BUILD_DIR)/$(TEST_DIR)/%: $(OBJ_DIR)/$(TEST_DIR)/%.o
 	$(CC) $< $(CFLAGS) $(LDFLAGS) $(INCFLAGS) -o $@
 
 $(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $< $(CFLAGS) $(INCFLAGS) -c  -o $@
 
 dir: $(ALL_DIRS)
