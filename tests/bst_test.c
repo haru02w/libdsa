@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static inline int comparator(const void *data_1, const void *data_2) 
+static int comparator(const void *data_1, const void *data_2) 
 {
         return *(int *)data_1 - *(int *)data_2;
 }
 
-static inline void printFunction(void *value)
+static void printFunction(void *value)
 {
         printf("%d ", *(int *)value);
 }
