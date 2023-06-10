@@ -17,6 +17,7 @@ void print(const void *value)
 
 int main()
 {
+
 	dsAVLTree_t *avl = dsAVLNewTree(comparator);
 
 	int value_1 = 5;
@@ -24,6 +25,7 @@ int main()
 	int value_3 = 3;
 
 	puts("\nRight rotation...");
+
 	dsAVLInsert(avl, &value_1);
 	dsAVLInsert(avl, &value_2);
 	dsAVLInsert(avl, &value_3);
@@ -39,6 +41,7 @@ int main()
 	value_3 = 5;
 
 	puts("\nLeft rotation...");
+
 	dsAVLInsert(avl, &value_1);
 	dsAVLInsert(avl, &value_2);
 	dsAVLInsert(avl, &value_3);
@@ -54,6 +57,7 @@ int main()
 	value_3 = 4;
 	
 	puts("\nRightLeft rotation...");
+
 	dsAVLInsert(avl, &value_1);
 	dsAVLInsert(avl, &value_2);
 	dsAVLInsert(avl, &value_3);
@@ -69,6 +73,7 @@ int main()
 	value_3 = 4;
 
 	puts("\nLeftRight rotation...");
+
 	dsAVLInsert(avl, &value_1);
 	dsAVLInsert(avl, &value_2);
 	dsAVLInsert(avl, &value_3);
@@ -81,5 +86,6 @@ int main()
 	puts("\n\n");
 
 	dsAVLDestroyTree(&avl);
+
 	return EXIT_SUCCESS;
 }

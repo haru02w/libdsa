@@ -31,7 +31,6 @@ static dsAVLNode_t *dsAVLCreateNode(void *new_value)
 	return new_node;
 }
 
-
 static void dsAVLClearNode(dsAVLNode_t *node)
 {
 	if(node == NULL)
@@ -73,7 +72,6 @@ size_t dsAVLGetHeight(dsAVLTree_t *tree)
 	return tree->head->height;
 }
 
-
 static inline size_t dsAVLMaxHeight(size_t left_height,
 				size_t right_height)
 {
@@ -83,7 +81,6 @@ static inline size_t dsAVLMaxHeight(size_t left_height,
 	return right_height;
 }
 
-
 static inline size_t dsAVLGetNodeHeight(dsAVLNode_t *node)
 {
 	if(node == NULL)
@@ -91,7 +88,6 @@ static inline size_t dsAVLGetNodeHeight(dsAVLNode_t *node)
 
 	return node->height;
 }
-
 
 static int dsAVLCalculateFactor(dsAVLNode_t *node)
 {
@@ -102,7 +98,6 @@ static int dsAVLCalculateFactor(dsAVLNode_t *node)
 		dsAVLGetNodeHeight(node->left);
 }
 
-
 static void dsAVLUpdateHeight(dsAVLNode_t *node)
 {
 	size_t left_height = dsAVLGetNodeHeight(node->left);
@@ -110,7 +105,6 @@ static void dsAVLUpdateHeight(dsAVLNode_t *node)
 
 	node->height = dsAVLMaxHeight(left_height, right_height) + 1;
 }
-
 
 static dsAVLNode_t *dsAVLRotateRight(dsAVLNode_t *node)
 {
@@ -125,7 +119,6 @@ static dsAVLNode_t *dsAVLRotateRight(dsAVLNode_t *node)
 	return left_child;
 }
 
-
 static dsAVLNode_t *dsAVLRotateLeft(dsAVLNode_t *node)
 {
 	dsAVLNode_t *right_child = node->right;
@@ -138,7 +131,6 @@ static dsAVLNode_t *dsAVLRotateLeft(dsAVLNode_t *node)
 
 	return right_child;
 }
-
 
 static dsAVLNode_t *dsAVLCheckRotation(dsAVLNode_t *node)
 {
@@ -170,7 +162,6 @@ static dsAVLNode_t *dsAVLCheckRotation(dsAVLNode_t *node)
 	return node;
 }
 
-
 static void dsAVLInsertNode(dsAVLNode_t **node, void *new_data, 
 			int (*compare)(const void *, const void *))
 {
@@ -188,6 +179,7 @@ static void dsAVLInsertNode(dsAVLNode_t **node, void *new_data,
 
 	*node = dsAVLCheckRotation(*node);
 }
+
 
 
 void dsAVLInsert(dsAVLTree_t *tree, void *new_data)
@@ -239,7 +231,6 @@ static void dsAVLRemoveNode(dsAVLNode_t **node, void *key,
 
 	*node = dsAVLCheckRotation(*node);
 }
-
 
 void dsAVLRemove(dsAVLTree_t *tree, void *key)
 {
