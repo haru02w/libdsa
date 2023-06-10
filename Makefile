@@ -1,6 +1,6 @@
 CC=gcc
 AR=ar
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -Werror -Wextra -pedantic
 
 SRC_DIR=src
 OBJ_DIR=obj

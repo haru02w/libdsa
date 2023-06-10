@@ -12,7 +12,7 @@ static void printFunction(void *value)
         printf("%d ", *(int *)value);
 }
 
-int main(int argc, char *argv[])
+int main()
 {
         dsBinaryTree_t *root = NULL;
 

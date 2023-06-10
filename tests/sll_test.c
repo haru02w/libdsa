@@ -12,7 +12,7 @@ void printFunction(void *value)
 	printf("%d ", *(int *)value);
 }
 
-int main(int argc, char *argv[])
+int main()
 {
 	dsSLinkedList_t *root1 = dsNewSLL();
 	int values1[] = { 1, 7, 43, 7, 23, 76, 324, 65 };

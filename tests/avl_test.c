@@ -15,7 +15,7 @@ void printValue(void *value)
 }
 
 
-int main(int argc, char *argv[])
+int main()
 {
 	dsBinaryTree_t *avl = NULL;
 
