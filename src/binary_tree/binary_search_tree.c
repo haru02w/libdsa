@@ -55,19 +55,6 @@ void dsBSTInsertNode(dsBinaryTree_t **root, void *new_value,
                 prev->right = dsBSTCreateNode(new_value);
 }
 
-/*void dsBSTInsertNode(dsBinaryTree_t **root, void *new_data, 
-                     int (*compare)(const void*, const void*)) 
-{
-        if(*root == NULL) {
-                *root = dsBstCreateNode(new_data);
-                return;
-        }
-
-        if(compare(new_data, (*root)->data) < 0)
-                dsBSTInsertNode(&(*root)->left, new_data, compare);
-        else if(compare(new_data, (*root)->data) > 0)
-                dsBSTInsertNode(&(*root)->right, new_data, compare);
-}*/
 
 void *dsBSTRemoveNode(dsBinaryTree_t **root, void *key,
                       int (*compare)(const void *, const void *))

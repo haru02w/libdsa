@@ -35,6 +35,14 @@ void dsBiTreePostTraversal(dsBinaryTree_t *node, void (*fn)(void *));
 
 // TODO: Breadth First Traversal, Depth First Traversals
 
+// Binary tree insertion with avl rotation
+void dsAVLInsertNode(dsBinaryTree_t **node, void *value, 
+		int (*compare)(const void *, const void *));
+
+// Binary tree removal with avl rotation
+void dsAVLRemoveNode(dsBinaryTree_t **node, void *key, 
+		int (*compare)(const void *, const void *));
+
 // Binary search tree node insertion
 void dsBSTInsertNode(dsBinaryTree_t **node, void *value,
 		     int (*compare)(const void *, const void *));
