@@ -106,24 +106,24 @@ void ds_rebalance_add(dsRBTNode_t *node){
 			continue;
 		}
 		if(node == node->parent->right  &&  node->parent == g->left){
-			ds_RBT_left_rotate(n->parent);
+			ds_RBT_left_rotate(tree, n->parent);
 			node = node->left;
 		}
 		else if(node == node->parent->left  &&  node->parent == g->right){
-			ds_RBT_right_rotate(n->parent);
+			ds_RBT_right_rotate(tree, n->parent);
 			node = node->right;
 		}
 		node->parent->color = BLACK;
 		g->color = RED;
 		if(node == node->parent->left  &&  node->parent == g->left)
-			ds_RBT_right_rotate(g);
+			ds_RBT_right_rotate(tree, g);
 		else
-			ds_RBT_left_rotate(g);
+			ds_RBT_left_rotate(tree, g);
 		return;
 	}
 }
 
-/*TODO: função de remover nó */
+/* função de remover nó */
 bool *ds_removeElem(dsRedBlackTree_t *tree, void *elem){
 	dsRBTNode_t *node;
 	node = tree->root;
@@ -142,7 +142,7 @@ bool *ds_removeElem(dsRedBlackTree_t *tree, void *elem){
 	return false;
 }
 
-/*TODO: função de rebalancear a arvore quando removido*/
+/* função de rebalancear a arvore quando removido*/
 void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 	dsRBTNode_t *removed_node = NULL;
 	dsRBTNode_t *child_node = NULL;
@@ -153,16 +153,104 @@ void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 	else
 		removed_node = sucessor_node(tree, node);
 	
+	if(removed_node->left != nil){
+		child_node = removed_node->left;
+	}
+	else{
+		child_node = removed_node->right;
+	}
+	child_node->parent = removed_node->parent;
+
+	if(removed_node->parent == nil)
+		tree->root = x;
+	else if(removed_node == removed_node->parent->left)
+		removed_node->parent->left = child_node;
+	else
+		removed_node->parent->right = child_node;
+	
+	if(removed_node != node)
+		node->value = removed_node->value;
+	
+	if(removed_node->color == BLACK)
+		fixupTree(tree, child_node);
+	
+	free(removed_node);
+	tree->count_nodes--;
+}
+
+/* função q rebalaceia essa bomba quando remove*/
+void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+	dsRBTNode_t *nil = tree->nil;
+
+	while(node != tree->root  &&  node->color == BLACK){
+		if(node == node->parent->left){
+			dsRBTNode *brother = node->parent->right;
+
+			if(brother->color == RED){
+				brother->color = BLACK;
+				node->parent->color = RED;
+				ds_RBT_left_rotate(tree, node->parent);
+				brother = x->parent->right;
+			}
+
+			if(brother->left->color == BLACK && brother->right->color == BLACK){
+				w->color = RED;
+				node = node->parent;
+			}
+			else{
+				if(brother->right->color == BLACK){
+					brother->left->color = BLACK;
+					brother->color = RED;
+					ds_RBT_right_rotate(tree, brother);
+					brother = x->parent->right;
+				}
+
+				brother->color = node->parent->color;
+				node->parent->color = BLACK;
+				ds_RBT_left_rotate(tree, node->parent);
+				node = tree->root;
+			}
+		}
+		else{
+			dsRBTNode *brother = node->parent->left;
+
+			if(brother->color == RED){
+				brother->color = BLACK;
+				node->parent->color = RED;
+				ds_RBT_right_rotate(tree, node->parent);
+				brother = x->parent->left;
+			}
+
+			if(brother->right->color == BLACK && brother->left->color == BLACK){
+				w->color = RED;
+				node = node->parent;
+			}
+			else{
+				if(brother->left->color == BLACK){
+					brother->right->color = BLACK;
+					brother->color = RED;
+					ds_RBT_left_rotate(tree, brother);
+					brother = x->parent->left;
+				}
+
+				brother->color = node->parent->color;
+				node->parent->color = BLACK;
+				ds_RBT_right_rotate(tree, node->parent);
+				node = tree->root;
+			}
+		}
+	}
+	node->color = BLACK;
 }
 
 /*TODO: função q acha o nó q será substituido*/
-dsRBTNode_t sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t node){}
+dsRBTNode_t sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
 
 /*TODO: função de rotação pra esquerda*/
-void ds_RBT_left_rotate(dsRBTNode_t *node){}
+void ds_RBT_left_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
 
 /*TODO: função de rotação pra esquerda*/
-void ds_RBT_right_rotate(dsRBTNode_t *node){}
+void ds_RBT_right_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
 
 
 
