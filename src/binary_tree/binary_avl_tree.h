@@ -12,7 +12,7 @@ typedef struct dsAVLNode {
 
 typedef struct dsAVLTree {
 	dsAVLNode_t *head;
-	size_t length;
+	size_t size;
 	int (*compare)(const void *, const void *);
 } dsAVLTree_t;
 

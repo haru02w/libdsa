@@ -9,7 +9,7 @@ dsAVLTree_t *dsAVLNewTree(int (*comparator)(const void *, const void *))
 
 	*new_tree = (dsAVLTree_t) {
 		.head = NULL,
-		.length = 0,
+		.size = 0,
 		.compare = comparator
 	};
 
@@ -55,12 +55,12 @@ void dsAVLDestroyTree(dsAVLTree_t **tree)
 }
 
 
-size_t dsAVLGetLength(dsAVLTree_t *tree)
+size_t dsAVLGetSize(dsAVLTree_t *tree)
 {
 	if(tree == NULL)
 		return 0;
 
-	return tree->length;
+	return tree->size;
 }
 
 
@@ -188,7 +188,7 @@ void dsAVLInsert(dsAVLTree_t *tree, void *new_data)
 		return;
 
 	dsAVLInsertNode(&tree->head, new_data, tree->compare);
-	tree->length++;
+	tree->size++;
 }
 
 
@@ -238,5 +238,5 @@ void dsAVLRemove(dsAVLTree_t *tree, void *key)
 		return;
 
 	dsAVLRemoveNode(&tree->head, key, tree->compare);
-	tree->length--;
+	tree->size--;
 }
