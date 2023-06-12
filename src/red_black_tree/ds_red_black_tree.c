@@ -83,6 +83,7 @@ void ds_addNode(dsRedBlackTree_t *tree, void *element){
 		prev_node->right = new_node;
 	}
 	ds_rebalance_add(new_node);
+	tree->count_nodes++;
 	
 }
 
@@ -123,10 +124,39 @@ void ds_rebalance_add(dsRBTNode_t *node){
 }
 
 /*TODO: função de remover nó */
-void *ds_removeNode(){}
+bool *ds_removeElem(dsRedBlackTree_t *tree, void *elem){
+	dsRBTNode_t *node;
+	node = tree->root;
+	while(node != tree->nil){
+		if(tree->comparator(node->value, elem) == 0){
+			ds_removeNode(tree, node);
+			return true;
+		}
+		if(tree->comparator(node->value, elem) < 0){
+			node = node->left;
+		}
+		else{
+			node = node->right;
+		}
+	}
+	return false;
+}
 
 /*TODO: função de rebalancear a arvore quando removido*/
-void ds_rebalance_rm(){}
+void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+	dsRBTNode_t *removed_node = NULL;
+	dsRBTNode_t *child_node = NULL;
+	dsRBTNode_t *nil = tree->nil;
+
+	if(node->left == nil  ||  node->right == nil)
+		removed_node = node;
+	else
+		removed_node = sucessor_node(tree, node);
+	
+}
+
+/*TODO: função q acha o nó q será substituido*/
+dsRBTNode_t sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t node){}
 
 /*TODO: função de rotação pra esquerda*/
 void ds_RBT_left_rotate(dsRBTNode_t *node){}
