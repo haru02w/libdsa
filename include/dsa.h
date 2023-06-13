@@ -4,6 +4,7 @@
 #include <stdbool.h>
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
+typedef struct dsAVLTree dsAVLTree_t;
 typedef struct dsSLinkedList dsSLinkedList_t;
 
 /***** Linked Lists *****/
@@ -35,13 +36,20 @@ void dsBiTreePostTraversal(dsBinaryTree_t *node, void (*fn)(void *));
 
 // TODO: Breadth First Traversal, Depth First Traversals
 
+// Creates a new avl tree
+dsAVLTree_t *dsAVLNewTree(int (*compare)(const void *, const void *));
+
+// Destroy the current avl tree
+void dsAVLDestroyTree(dsAVLTree_t **tree);
+
 // Binary tree insertion with avl rotation
-void dsAVLInsertNode(dsBinaryTree_t **node, void *value, 
-		int (*compare)(const void *, const void *));
+void dsAVLInsert(dsAVLTree_t *tree, void *value); 
 
 // Binary tree removal with avl rotation
-void dsAVLRemoveNode(dsBinaryTree_t **node, void *key, 
-		int (*compare)(const void *, const void *));
+void dsAVLRemove(dsAVLTree_t *tree, void *key); 
+
+// Print an entire avl tree
+void dsAVLPrintTree(dsAVLTree_t *tree, void (*print)(const void *));
 
 // Binary search tree node insertion
 void dsBSTInsertNode(dsBinaryTree_t **node, void *value,
