@@ -3,6 +3,11 @@ int compareInt(void *arr,  int a,  int b) {
     return ((int *)arr)[a] - ((int *)arr)[b];
 }
 
+ //compara os valores de 2 arrays
+    int compare2Int(void *arr, void *arr2, int a,  int b) {
+        return ((int *)arr)[a] - ((int *)arr2)[b];
+    }
+
 //troca os valores do array
 void swapInt(void *arr, int a, int b){
     int temp = ((int *)arr)[a];

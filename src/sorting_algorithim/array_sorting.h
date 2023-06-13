@@ -14,10 +14,13 @@ void dsShellSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(voi
 void dsQuickSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void*, const int, const int));
 
 //Merge Sort
-void dsMergeSort(void *arr, size_t size, size_t memnumb, 
-                                        int (*compareArray)(void *, void *, int,  int), void (*changeArray)(void *, void*, const int, const int));
+void dsMergeSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void *, void *, int,  int));
 
 //Utils
+//swap an array value directly in memory
 void swap(void* arr, size_t memnumb, int i, int j);
+
+//used for swapping values between 2 arrays of the same type
+void swapArrays(void *in, void *out, size_t memnumb, int in_i, int out_i);
 
 #endif //ARRAY_SORTING_H_

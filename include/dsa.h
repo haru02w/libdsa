@@ -61,19 +61,15 @@ void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,
 //WARNING: any array should be coverted, i.e. ((int*)arr)[INDEX];
 
 //Insertion Sort
-void dsInsertionSort(void *arr, size_t size, int (*compareArray)(void *,  int,  int), 
-                                            void (*swapArray)(void *, const int, const int));
+void dsInsertionSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void *,  int,  int));
 
 //Shell Sort
-void dsShellSort(void *arr, size_t size, int (*compareArray)(void *,  int,  int), 
-                                            void (*swapArray)(void *, const int, const int));
+void dsShellSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void *,  int,  int));
 
 //Quick Sort
-void dsQuickSort(void *arr, size_t size, int (*compareArray)(void*, const int, const int),
-                                             void (*swapArray)(void *, const int, const int));
+void dsQuickSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void*, const int, const int));
 
 //Merge Sort
-void dsMergeSort(void *arr, size_t size, int (*typeSize)(void), 
-                                        int (*compareArray)(void *, void *, int,  int), void (*changeArray)(void *, void*, const int, const int));
+void dsMergeSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void *, void *, int,  int));
 
 #endif // !DSA_H_
