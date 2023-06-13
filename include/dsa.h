@@ -2,6 +2,7 @@
 #define DSA_H_
 
 #include <stdbool.h>
+#include <stdio.h>
 
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
@@ -72,6 +73,7 @@ void dsQuickSort(void *arr, size_t size, int (*compareArray)(void*, const int, c
                                              void (*swapArray)(void *, const int, const int));
 
 //Merge Sort
-//todo
+void dsMergeSort(void *arr, size_t size, int (*typeSize)(void), 
+                                        int (*compareArray)(void *, void *, int,  int), void (*changeArray)(void *, void*, const int, const int));
 
 #endif // !DSA_H_
