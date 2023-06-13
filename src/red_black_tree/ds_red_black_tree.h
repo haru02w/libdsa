@@ -14,7 +14,7 @@ typedef struct dsRBTNode {
 
 typedef struct dsRedBlackTree{
 	dsRBTNode_t *root;
-	void *comparator;
+	int (*comparator)(const void *, const void *);
 	void *printer;
 	size_t count_nodes;
 	dsRBTNode_t *nil;

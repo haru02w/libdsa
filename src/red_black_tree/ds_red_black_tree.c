@@ -1,4 +1,5 @@
 #include "ds_red_black_tree.h"
+#include <stdbool.h>
 
 // "construtor" da arvore
 dsRedBlackTree_t *new_dsRBT(int (*comparator)(const void *, const void *), void (*printer)(const void *)){
@@ -68,7 +69,7 @@ void ds_addNode(dsRedBlackTree_t *tree, void *element){
 
 	while (node != tree->nil){
 		prev_node = node;
-		if(tree->comparator(node->value, element) < 0){
+		if((tree->comparator(node->value, element)) < 0){
 			node = node->left;
 		}
 		else{
@@ -82,13 +83,13 @@ void ds_addNode(dsRedBlackTree_t *tree, void *element){
 	else{
 		prev_node->right = new_node;
 	}
-	ds_rebalance_add(new_node);
+	ds_rebalance_add(tree, new_node);
 	tree->count_nodes++;
 	
 }
 
 /* função de rebalancear a arvore quando adicionado*/
-void ds_rebalance_add(dsRBTNode_t *node){
+void ds_rebalance_add(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 	while (1){
 		if(node->parent == NULL){
 			node->color = BLACK;
@@ -106,11 +107,11 @@ void ds_rebalance_add(dsRBTNode_t *node){
 			continue;
 		}
 		if(node == node->parent->right  &&  node->parent == g->left){
-			ds_RBT_left_rotate(tree, n->parent);
+			ds_RBT_left_rotate(tree, node->parent);
 			node = node->left;
 		}
 		else if(node == node->parent->left  &&  node->parent == g->right){
-			ds_RBT_right_rotate(tree, n->parent);
+			ds_RBT_right_rotate(tree, node->parent);
 			node = node->right;
 		}
 		node->parent->color = BLACK;
@@ -162,7 +163,7 @@ void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 	child_node->parent = removed_node->parent;
 
 	if(removed_node->parent == nil)
-		tree->root = x;
+		tree->root = child_node;
 	else if(removed_node == removed_node->parent->left)
 		removed_node->parent->left = child_node;
 	else
@@ -184,17 +185,17 @@ void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 
 	while(node != tree->root  &&  node->color == BLACK){
 		if(node == node->parent->left){
-			dsRBTNode *brother = node->parent->right;
+			dsRBTNode_t *brother = node->parent->right;
 
 			if(brother->color == RED){
 				brother->color = BLACK;
 				node->parent->color = RED;
 				ds_RBT_left_rotate(tree, node->parent);
-				brother = x->parent->right;
+				brother = node->parent->right;
 			}
 
 			if(brother->left->color == BLACK && brother->right->color == BLACK){
-				w->color = RED;
+				brother->color = RED;
 				node = node->parent;
 			}
 			else{
@@ -202,7 +203,7 @@ void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 					brother->left->color = BLACK;
 					brother->color = RED;
 					ds_RBT_right_rotate(tree, brother);
-					brother = x->parent->right;
+					brother = node->parent->right;
 				}
 
 				brother->color = node->parent->color;
@@ -212,17 +213,17 @@ void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 			}
 		}
 		else{
-			dsRBTNode *brother = node->parent->left;
+			dsRBTNode_t *brother = node->parent->left;
 
 			if(brother->color == RED){
 				brother->color = BLACK;
 				node->parent->color = RED;
 				ds_RBT_right_rotate(tree, node->parent);
-				brother = x->parent->left;
+				brother = node->parent->left;
 			}
 
 			if(brother->right->color == BLACK && brother->left->color == BLACK){
-				w->color = RED;
+				brother->color = RED;
 				node = node->parent;
 			}
 			else{
@@ -230,7 +231,7 @@ void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 					brother->right->color = BLACK;
 					brother->color = RED;
 					ds_RBT_left_rotate(tree, brother);
-					brother = x->parent->left;
+					brother = node->parent->left;
 				}
 
 				brother->color = node->parent->color;
@@ -244,7 +245,7 @@ void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 }
 
 /*TODO: função q acha o nó q será substituido*/
-dsRBTNode_t sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
+dsRBTNode_t *sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
 
 /*TODO: função de rotação pra esquerda*/
 void ds_RBT_left_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
