@@ -11,7 +11,7 @@ typedef struct dsListNode {
 } dsListNode_t;
 
 typedef struct dsList {
-	size_t length;
+	size_t size;
 	int (*compare)(const void *, const void *);
 
 	dsListNode_t *head;
