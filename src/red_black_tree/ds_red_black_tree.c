@@ -244,14 +244,47 @@ void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 	node->color = BLACK;
 }
 
-/*TODO: função q acha o nó q será substituido*/
-dsRBTNode_t *sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
+/* função q acha o nó q será substituido (menor dos maiores)*/
+dsRBTNode_t *sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+	dsRBTNode_t *nil = tree->nil;
+	dsRBTNode_t *sucessor = node->right;
 
-/*TODO: função de rotação pra esquerda*/
-void ds_RBT_left_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
+	while(sucessor->left != nil){
+		sucessor = sucessor->left;
+	}
+	return sucessor;
+	
+}
 
-/*TODO: função de rotação pra esquerda*/
-void ds_RBT_right_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){}
+/* função de rotação pra direita*/
+void ds_RBT_right_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+	dsRBTNode_t *child_node = node->left;
+	node->left = child_node->right;
+	child_node->parent = node->parent;
+	if(node->parent != NULL){
+		if(node->parent->left == node)
+			node->parent->left = child_node;
+		else
+			node->parent->right = child_node;
+	}
+	child_node->right = node;
+	node->parent = child_node;
+}
+
+/* função de rotação pra esquerda*/
+void ds_RBT_left_rotate(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+	dsRBTNode_t *child_node = node->right;
+	node->right = child_node->left;
+	child_node->parent = node->parent;
+	if(node->parent != NULL){
+		if(node->parent->right == node)
+			node->parent->right = child_node;
+		else
+			node->parent->left = child_node;
+	}
+	child_node->left = node;
+	node->parent = child_node;
+}
 
 
 
