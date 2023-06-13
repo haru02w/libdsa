@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include <dsa.h>
 #include "./linked_list.h"
@@ -31,13 +32,13 @@ static dsListNode_t *dsListFindNodeAt(dsList_t *list, size_t index)
 	size_t distance2tail = labs((long)list->size - 1 - (long)index);
 
 	int start_flag;
-	if (index < distance2tail) {
-		if (index > distance2last)
+	if (index <= distance2tail) {
+		if (index >= distance2last)
 			start_flag = DS_LIST_AT_MID;
 		else
 			start_flag = DS_LIST_AT_START;
 	} else {
-		if (distance2tail < distance2last)
+		if (distance2tail <= distance2last)
 			start_flag = DS_LIST_AT_END;
 		else
 			start_flag = DS_LIST_AT_MID;
@@ -48,25 +49,30 @@ static dsListNode_t *dsListFindNodeAt(dsList_t *list, size_t index)
 	int i;
 	switch (start_flag) {
 	case DS_LIST_AT_START:
-		direction = (index - 0) >= 0 ? 1 : -1;
+		direction = ((long)index - 0) >= 0 ? 1 : -1;
 		start_node = list->head;
 		i = 0;
 		break;
 	case DS_LIST_AT_MID:
-		direction = (index - dsListTraversal.index) >= 0 ? 1 : -1;
+		direction = ((long)index - (long)dsListTraversal.index) >= 0 ?
+				    1 :
+				    -1;
 		start_node = dsListTraversal.last_node;
 		i = dsListTraversal.index;
 		break;
 	case DS_LIST_AT_END:
-		direction = (index - list->size - 1) > 0 ? 1 : -1;
+		direction = ((long)index - (long)list->size - 1) > 0 ? 1 : -1;
 		start_node = list->tail;
 		i = list->size;
 		break;
+	default:
+		return NULL;
 	}
 
-	dsListNode_t *tmp;
-	for (tmp = start_node; i != index; i += direction)
-		tmp = direction > 0 ? tmp->next : tmp->prev;
+	dsListNode_t *tmp = start_node;
+	for (; i != index; i += direction)
+		tmp = direction > 0 ? tmp->next :
+				      tmp->prev; // FIX: segfaulting here
 
 	dsListTraversal.index = i;
 	dsListTraversal.last_node = tmp;
@@ -139,6 +145,7 @@ bool dsListInsert(dsList_t *list, void *value, enum dsListFlags flag)
 	if (*head == NULL) {
 		*head = dsListNewNode(value);
 		*tail = *head;
+		dsListTraversal.last_node = *head;
 		list->size = 1;
 		return true;
 	}
@@ -175,11 +182,11 @@ bool dsSortedListInsert(dsList_t *list, void *value)
 
 	dsListNode_t **head = &list->head;
 	dsListNode_t **tail = &list->tail;
-	dsListNode_t *tmp = *head;
 
 	if (*head == NULL) {
 		*head = dsListNewNode(value);
 		*tail = *head;
+		dsListTraversal.last_node = *head;
 		++list->size;
 		return true;
 	} else {
@@ -187,6 +194,7 @@ bool dsSortedListInsert(dsList_t *list, void *value)
 		if (head_comparison == 0) {
 			return false;
 		} else if (head_comparison < 0) {
+			dsListNode_t *tmp = *head;
 			*head = dsListNewNode(value);
 
 			(*head)->next = tmp;
@@ -197,20 +205,22 @@ bool dsSortedListInsert(dsList_t *list, void *value)
 		}
 	}
 
+	dsListNode_t *tmp = *head;
 	while (tmp->next != NULL && list->compare(value, tmp->next->value) > 0)
 		tmp = tmp->next;
 
 	if (tmp->next != NULL && list->compare(value, tmp->next->value) == 0)
 		return false;
 
-	dsListNode_t *next = tmp->next;
-	tmp->next = dsListNewNode(value);
+	dsListNode_t *new_node = dsListNewNode(value);
+	new_node->prev = tmp;
+	new_node->next = tmp->next;
 
-	tmp->next->next = next;
-	next->prev = tmp->next;
-
-	if ((*tail)->next != NULL)
-		*tail = (*tail)->next;
+	tmp->next = new_node;
+	if (new_node->next != NULL)
+		new_node->next->prev = new_node;
+	else
+		*tail = new_node;
 	++list->size;
 	return true;
 }

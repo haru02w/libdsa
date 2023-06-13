@@ -13,8 +13,9 @@ void printList(dsList_t *list)
 	for (int i = 0; i < dsListGetSize(list); i++) {
 		int *value = (int *)dsListGetValueAt(list, i);
 		if (value != NULL)
-			printf("%d", *value);
+			printf("%d ", *value);
 	}
+	putchar('\n');
 }
 
 int main(int argc, char *argv[])

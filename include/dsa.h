@@ -14,6 +14,8 @@ enum dsListFlags {
 	DS_LIST_AT_END = 1,
 };
 
+void dsDebugListTraversal(dsList_t *list, void (*fn)(void *));
+
 // create a new Linked List
 dsList_t *dsNewList();
 
