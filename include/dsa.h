@@ -2,6 +2,7 @@
 #define DSA_H_
 
 #include <stdbool.h>
+
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
 typedef struct dsSLinkedList dsSLinkedList_t;
@@ -54,5 +55,23 @@ void *dsBSTRemoveNode(dsBinaryTree_t **node, void *key,
 // Binary search tree node search
 void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,
 		      int (*compare)(const void *, const void *));
+
+/***** Array Sorting Algorithms *****/
+//WARNING: any array should be coverted, i.e. ((int*)arr)[INDEX];
+
+//Insertion Sort
+void dsInsertionSort(void *arr, size_t size, int (*compareArray)(void *,  int,  int), 
+                                            void (*swapArray)(void *, const int, const int));
+
+//Shell Sort
+void dsShellSort(void *arr, size_t size, int (*compareArray)(void *,  int,  int), 
+                                            void (*swapArray)(void *, const int, const int));
+
+//Quick Sort
+void dsQuickSort(void *arr, size_t size, int (*compareArray)(void*, const int, const int),
+                                             void (*swapArray)(void *, const int, const int));
+
+//Merge Sort
+//todo
 
 #endif // !DSA_H_
