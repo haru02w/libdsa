@@ -13,7 +13,7 @@ void copyArray(void *arr_in, void *arr_out, int size, size_t memnumb, int index)
 }
 
 //the true process
-void mergeArray(void *arr, void *arr_lower_half, int  *arr_upper_half, int size, size_t memnumb, int (*compareArray)(void *, void *, int,  int))
+void mergeArray(void *arr, void *arr_lower_half, void  *arr_upper_half, int size, size_t memnumb, int (*compare)(void *, void *))
 {
     int i;
     int top, bottom;
@@ -22,7 +22,7 @@ void mergeArray(void *arr, void *arr_lower_half, int  *arr_upper_half, int size,
     top = bottom = 0;
 
     for(i = 0; i < size; i++){
-        if(top == top_size || ((bottom < size/2) && compareArray(arr_lower_half, arr_upper_half, bottom, top) < 0)){
+        if(top == top_size || ((bottom < size/2) && compare(arr_lower_half + (bottom * memnumb), arr_upper_half + (top * memnumb)) < 0)){
             swapArrays(arr, arr_lower_half, memnumb, i, bottom);
             bottom++;
 
@@ -39,7 +39,7 @@ void mergeArray(void *arr, void *arr_lower_half, int  *arr_upper_half, int size,
 //main function
 //typeSize -> functions that get the size of a type to work with the array allocation
 //changeArray -> assing an array to another array, index by index
-void dsMergeSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void *, void *, int,  int))
+void dsMergeSort(void *arr, size_t size, size_t memnumb, int (*compare)(void *, void *))
 {
     void *lower_half, *upper_half;
 
@@ -54,11 +54,11 @@ void dsMergeSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(voi
     copyArray(upper_half, arr, size/2 + size%2, memnumb, size/2); //size % 2, to support non pair values
 
     //sort each part
-    dsMergeSort(lower_half, size/2, memnumb, compareArray);
-    dsMergeSort(upper_half, size/2 + size%2, memnumb, compareArray);
+    dsMergeSort(lower_half, size/2, memnumb, compare);
+    dsMergeSort(upper_half, size/2 + size%2, memnumb, compare);
 
     //Merge the parts
-    mergeArray(arr, lower_half, upper_half, size, memnumb, compareArray);
+    mergeArray(arr, lower_half, upper_half, size, memnumb, compare);
 
     //free the old ones
     free(lower_half);

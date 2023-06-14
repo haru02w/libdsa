@@ -2,7 +2,7 @@
 #include "./array_sorting.h"
 
 //recursion -> moves smaller number to left and bigger ones to the right
-void quick(void *arr, const int left, const int right, size_t memnumb, int (*compareArray)(void*, const int, const int)){
+void quick(void *arr, const int left, const int right, size_t memnumb, int (*compare)(void*, void*)){
     if(left >= right) return;
 
     int pivot = left;
@@ -10,7 +10,7 @@ void quick(void *arr, const int left, const int right, size_t memnumb, int (*com
 
     //start swapping the values
     for(swapper = left+1; i <= right; i++){
-        if(compareArray(arr, i, pivot) < 0){ //changing the < to > changes the order of sorting
+        if(compare(arr+(i*memnumb), arr+(pivot*memnumb)) < 0){ //changing the < to > changes the order of sorting
             swap(arr, memnumb, i, swapper);
             swap(arr, memnumb, pivot, swapper);
             pivot++;
@@ -19,12 +19,12 @@ void quick(void *arr, const int left, const int right, size_t memnumb, int (*com
     }
 
     //do it again
-    quick(arr, left, pivot-1, memnumb, compareArray);
-    quick(arr, pivot+1, right, memnumb, compareArray);
+    quick(arr, left, pivot-1, memnumb, compare);
+    quick(arr, pivot+1, right, memnumb, compare);
 }
 
 //main process
-void dsQuickSort(void *arr, size_t size, size_t memnumb, int (*compareArray)(void*, const int, const int)){
+void dsQuickSort(void *arr, size_t size, size_t memnumb, int (*compare)(void*, void*)){
     int left = 0, right = size-1;
-    quick(arr,left,right, memnumb, compareArray);
+    quick(arr,left,right, memnumb, compare);
 }
