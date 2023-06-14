@@ -2,7 +2,6 @@
 #define DSA_H_
 
 #include <stdbool.h>
-#include <stdio.h>
 
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;

@@ -4,7 +4,7 @@
 #include "./array_sorting.h"
 
 //copy one array to another one
-void copyArray(void *arr_in, void *arr_out, int size, size_t memnumb, int index)
+static void copyArray(void *arr_in, void *arr_out, int size, size_t memnumb, int index)
 {
     int i;
     for(i = 0; i < size; i++){
@@ -13,7 +13,7 @@ void copyArray(void *arr_in, void *arr_out, int size, size_t memnumb, int index)
 }
 
 //the true process
-void mergeArray(void *arr, void *arr_lower_half, void  *arr_upper_half, int size, size_t memnumb, int (*compare)(void *, void *))
+static void mergeArray(void *arr, void *arr_lower_half, void  *arr_upper_half, int size, size_t memnumb, int (*compare)(void *, void *))
 {
     int i;
     int top, bottom;

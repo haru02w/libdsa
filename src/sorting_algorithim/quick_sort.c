@@ -2,7 +2,7 @@
 #include "./array_sorting.h"
 
 //recursion -> moves smaller number to left and bigger ones to the right
-void quick(void *arr, const int left, const int right, size_t memnumb, int (*compare)(void*, void*)){
+static void quick(void *arr, const int left, const int right, size_t memnumb, int (*compare)(void*, void*)){
     if(left >= right) return;
 
     int pivot = left;
