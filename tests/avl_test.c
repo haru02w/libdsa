@@ -9,77 +9,83 @@ int comparator(const void *data_1, const void *data_2)
 }
 
 
-void printValue(void *value)
+void print(const void *value)
 {
-	printf("%d ", *(int *)value);
+	printf("%d", *(int *)value);
 }
 
 
 int main()
 {
-	dsBinaryTree_t *avl = NULL;
+
+	dsAVLTree_t *avl = dsAVLNewTree(comparator);
 
 	int value_1 = 5;
 	int value_2 = 4;
 	int value_3 = 3;
 
 	puts("\nRight rotation...");
-	dsAVLInsertNode(&avl, &value_1, comparator);
-	dsAVLInsertNode(&avl, &value_2, comparator);
-	dsAVLInsertNode(&avl, &value_3, comparator);
 
-	dsBiTreeInTraversal(avl, printValue);
+	dsAVLInsert(avl, &value_1);
+	dsAVLInsert(avl, &value_2);
+	dsAVLInsert(avl, &value_3);
 
+	dsAVLPrintTree(avl, print);
 
-	dsAVLRemoveNode(&avl, &value_1, comparator);
-	dsAVLRemoveNode(&avl, &value_2, comparator);
-	dsAVLRemoveNode(&avl, &value_3, comparator);
+	dsAVLRemove(avl, &value_1);
+	dsAVLRemove(avl, &value_2);
+	dsAVLRemove(avl, &value_3);
 
 	value_1 = 3;
 	value_2 = 4;
 	value_3 = 5;
 
 	puts("\nLeft rotation...");
-	dsAVLInsertNode(&avl, &value_1, comparator);
-	dsAVLInsertNode(&avl, &value_2, comparator);
-	dsAVLInsertNode(&avl, &value_3, comparator);
-	
-	dsBiTreeInTraversal(avl, printValue);
 
-	dsAVLRemoveNode(&avl, &value_1, comparator);
-	dsAVLRemoveNode(&avl, &value_2, comparator);
-	dsAVLRemoveNode(&avl, &value_3, comparator);
+	dsAVLInsert(avl, &value_1);
+	dsAVLInsert(avl, &value_2);
+	dsAVLInsert(avl, &value_3);
+	
+	dsAVLPrintTree(avl, print);
+	
+	dsAVLRemove(avl, &value_1);
+	dsAVLRemove(avl, &value_2);
+	dsAVLRemove(avl, &value_3);
 	
 	value_1 = 3;
 	value_2 = 5;
 	value_3 = 4;
 	
 	puts("\nRightLeft rotation...");
-	dsAVLInsertNode(&avl, &value_1, comparator);
-	dsAVLInsertNode(&avl, &value_2, comparator);
-	dsAVLInsertNode(&avl, &value_3, comparator);
+
+	dsAVLInsert(avl, &value_1);
+	dsAVLInsert(avl, &value_2);
+	dsAVLInsert(avl, &value_3);
 	
-	dsBiTreeInTraversal(avl, printValue);
+	dsAVLPrintTree(avl, print);
 	
-	dsAVLRemoveNode(&avl, &value_1, comparator);
-	dsAVLRemoveNode(&avl, &value_2, comparator);
-	dsAVLRemoveNode(&avl, &value_3, comparator);
+	dsAVLRemove(avl, &value_1);
+	dsAVLRemove(avl, &value_2);
+	dsAVLRemove(avl, &value_3);
 	
 	value_1 = 5;
 	value_2 = 3;
 	value_3 = 4;
 
 	puts("\nLeftRight rotation...");
-	dsAVLInsertNode(&avl, &value_1, comparator);
-	dsAVLInsertNode(&avl, &value_2, comparator);
-	dsAVLInsertNode(&avl, &value_3, comparator);
+
+	dsAVLInsert(avl, &value_1);
+	dsAVLInsert(avl, &value_2);
+	dsAVLInsert(avl, &value_3);
 	
-	dsBiTreeInTraversal(avl, printValue);
+	dsAVLPrintTree(avl, print);
 	
-	dsAVLRemoveNode(&avl, &value_1, comparator);
-	dsAVLRemoveNode(&avl, &value_2, comparator);
-	dsAVLRemoveNode(&avl, &value_3, comparator);
+	dsAVLRemove(avl, &value_1);
+	dsAVLRemove(avl, &value_2);
+	dsAVLRemove(avl, &value_3);
 	puts("\n\n");
-	
+
+	dsAVLDestroyTree(&avl);
+
 	return EXIT_SUCCESS;
 }

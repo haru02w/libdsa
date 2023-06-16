@@ -1,12 +1,27 @@
 #include <stdlib.h>
 #include <stddef.h>
-#include "./binary_tree.h"
+#include "./binary_avl_tree.h"
 
-static dsBinaryTree_t *dsAVLCreateNode(void *new_value)
+
+dsAVLTree_t *dsAVLNewTree(int (*comparator)(const void *, const void *))
 {
-	dsBinaryTree_t *new_node = malloc(sizeof(dsBinaryTree_t));
+	dsAVLTree_t *new_tree = malloc(sizeof(dsAVLTree_t));
 
-	*new_node = (dsBinaryTree_t) {
+	*new_tree = (dsAVLTree_t) {
+		.head = NULL,
+		.size = 0,
+		.compare = comparator
+	};
+
+	return new_tree;
+}
+
+
+static dsAVLNode_t *dsAVLCreateNode(void *new_value)
+{
+	dsAVLNode_t *new_node = malloc(sizeof(dsAVLNode_t));
+
+	*new_node = (dsAVLNode_t) {
 		.value = new_value,
 		.left = NULL,
 		.right = NULL,
@@ -14,6 +29,47 @@ static dsBinaryTree_t *dsAVLCreateNode(void *new_value)
 	};
 
 	return new_node;
+}
+
+static void dsAVLClearNode(dsAVLNode_t *node)
+{
+	if(node == NULL)
+		return;
+
+	dsAVLClearNode(node->left);
+	dsAVLClearNode(node->right);
+
+	free(node);
+}
+
+
+void dsAVLDestroyTree(dsAVLTree_t **tree)
+{
+	if(*tree == NULL)
+		return;
+
+	dsAVLClearNode((*tree)->head);
+
+	free(*tree);
+	*tree = NULL;
+}
+
+
+size_t dsAVLGetSize(dsAVLTree_t *tree)
+{
+	if(tree == NULL)
+		return 0;
+
+	return tree->size;
+}
+
+
+size_t dsAVLGetHeight(dsAVLTree_t *tree)
+{
+	if(tree == NULL)
+		return 0;
+
+	return tree->head->height;
 }
 
 static inline size_t dsAVLMaxHeight(size_t left_height,
@@ -25,7 +81,7 @@ static inline size_t dsAVLMaxHeight(size_t left_height,
 	return right_height;
 }
 
-static inline size_t dsAVLGetNodeHeight(dsBinaryTree_t *node)
+static inline size_t dsAVLGetNodeHeight(dsAVLNode_t *node)
 {
 	if(node == NULL)
 		return 0;
@@ -33,7 +89,7 @@ static inline size_t dsAVLGetNodeHeight(dsBinaryTree_t *node)
 	return node->height;
 }
 
-static int dsAVLCalculateFactor(dsBinaryTree_t *node)
+static int dsAVLCalculateFactor(dsAVLNode_t *node)
 {
 	if(node == NULL)
 		return 0;
@@ -42,7 +98,7 @@ static int dsAVLCalculateFactor(dsBinaryTree_t *node)
 		dsAVLGetNodeHeight(node->left);
 }
 
-static void dsAVLUpdateHeight(dsBinaryTree_t *node)
+static void dsAVLUpdateHeight(dsAVLNode_t *node)
 {
 	size_t left_height = dsAVLGetNodeHeight(node->left);
 	size_t right_height = dsAVLGetNodeHeight(node->right);
@@ -50,9 +106,9 @@ static void dsAVLUpdateHeight(dsBinaryTree_t *node)
 	node->height = dsAVLMaxHeight(left_height, right_height) + 1;
 }
 
-static dsBinaryTree_t *dsAVLRotateRight(dsBinaryTree_t *node)
+static dsAVLNode_t *dsAVLRotateRight(dsAVLNode_t *node)
 {
-	dsBinaryTree_t *left_child = node->left;
+	dsAVLNode_t *left_child = node->left;
 
 	node->left = left_child->right;
 	left_child->right = node;
@@ -63,9 +119,9 @@ static dsBinaryTree_t *dsAVLRotateRight(dsBinaryTree_t *node)
 	return left_child;
 }
 
-static dsBinaryTree_t *dsAVLRotateLeft(dsBinaryTree_t *node)
+static dsAVLNode_t *dsAVLRotateLeft(dsAVLNode_t *node)
 {
-	dsBinaryTree_t *right_child = node->right;
+	dsAVLNode_t *right_child = node->right;
 
 	node->right = right_child->left;
 	right_child->left = node;
@@ -76,7 +132,7 @@ static dsBinaryTree_t *dsAVLRotateLeft(dsBinaryTree_t *node)
 	return right_child;
 }
 
-static dsBinaryTree_t *dsAVLCheckRotation(dsBinaryTree_t *node)
+static dsAVLNode_t *dsAVLCheckRotation(dsAVLNode_t *node)
 {
 	dsAVLUpdateHeight(node);
 	int balance_factor = dsAVLCalculateFactor(node); 
@@ -106,8 +162,8 @@ static dsBinaryTree_t *dsAVLCheckRotation(dsBinaryTree_t *node)
 	return node;
 }
 
-void dsAVLInsertNode(dsBinaryTree_t **node, void *new_data, 
-		int (*compare)(const void *, const void *))
+static void dsAVLInsertNode(dsAVLNode_t **node, void *new_data, 
+			int (*compare)(const void *, const void *))
 {
 	if(*node == NULL) {
 		*node = dsAVLCreateNode(new_data);
@@ -125,7 +181,18 @@ void dsAVLInsertNode(dsBinaryTree_t **node, void *new_data,
 }
 
 
-void dsAVLRemoveNode(dsBinaryTree_t **node, void *key,
+
+void dsAVLInsert(dsAVLTree_t *tree, void *new_data)
+{
+	if(tree == NULL)
+		return;
+
+	dsAVLInsertNode(&tree->head, new_data, tree->compare);
+	tree->size++;
+}
+
+
+static void dsAVLRemoveNode(dsAVLNode_t **node, void *key,
 		int (*compare)(const void *, const void *))
 {
 	if(*node == NULL)
@@ -137,7 +204,7 @@ void dsAVLRemoveNode(dsBinaryTree_t **node, void *key,
 		dsAVLRemoveNode(&(*node)->right, key, compare);
 
 	else {
-		dsBinaryTree_t *child_node = NULL;
+		dsAVLNode_t *child_node = NULL;
 
 		if((*node)->left == NULL || (*node)->right == NULL) {
 			if((*node)->left == NULL)
@@ -163,4 +230,13 @@ void dsAVLRemoveNode(dsBinaryTree_t **node, void *key,
 	}
 
 	*node = dsAVLCheckRotation(*node);
+}
+
+void dsAVLRemove(dsAVLTree_t *tree, void *key)
+{
+	if(tree == NULL)
+		return;
+
+	dsAVLRemoveNode(&tree->head, key, tree->compare);
+	tree->size--;
 }
