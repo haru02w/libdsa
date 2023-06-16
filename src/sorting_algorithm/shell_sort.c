@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "./array_sorting.h"
 
-void dsShellSort(void *arr, size_t size, size_t memnumb, int (*compare)(void *, void *)){
+void dsShellSort(void *arr, size_t size, size_t elem_size, int (*compare)(void *, void *)){
     int i, j, aux, gap;
 
     //stating gap
@@ -13,8 +13,8 @@ void dsShellSort(void *arr, size_t size, size_t memnumb, int (*compare)(void *, 
         for(i = gap; i < size; i++){
             j = i;
 
-            while(j >= gap && compare(arr+(j*memnumb), arr+((j-gap)*memnumb)) < 0){
-                swap(arr,memnumb,j,j-gap);
+            while(j >= gap && compare(arr+(j*elem_size), arr+((j-gap)*elem_size)) < 0){
+                swap(arr,elem_size,j,j-gap);
                 j -= gap;
             }
         }
