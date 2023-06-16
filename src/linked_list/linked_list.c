@@ -286,17 +286,17 @@ void *dsListRemoveAtEdge(dsList_t *list, enum dsListFlags flag)
 		return NULL;
 	}
 }
-
-void *dsSortedListRemoveAtEdge(dsList_t *list, enum dsListFlags flag)
-{
-	return dsListRemoveAtEdge(list, flag);
-}
-
 void *dsSortedListRemove(dsList_t *list, void *value)
 {
 	return dsListRemove(list, value);
 }
+
 void *dsSortedListRemoveAt(dsList_t *list, unsigned index)
 {
 	return dsListRemoveAt(list, index);
+}
+
+void *dsSortedListRemoveAtEdge(dsList_t *list, enum dsListFlags flag)
+{
+	return dsListRemoveAtEdge(list, flag);
 }

@@ -33,12 +33,19 @@ void *dsListGetValueAt(dsList_t *list, unsigned index);
 
 // insert a new value into a Linked List (0 - error, 1 - sucess)
 bool dsListInsertAtEdge(dsList_t *list, void *value, enum dsListFlags flag);
+// TODO: dsListInsertAt
 
 // insert a new value into a sorted Single Linked List (0 - error, 1 - sucess)
 bool dsSortedListInsert(dsList_t *list, void *value);
 
 // remove a node of a Linked List
 void *dsListRemove(dsList_t *list, void *value);
+void *dsListRemoveAt(dsList_t *list, unsigned index);
+void *dsListRemoveAtEdge(dsList_t *list, enum dsListFlags flag);
+// remove a node of sorted linked list
+void *dsSortedListRemove(dsList_t *list, void *value);
+void *dsSortedListRemoveAt(dsList_t *list, unsigned index);
+void *dsSortedListRemoveAtEdge(dsList_t *list, enum dsListFlags flag);
 
 // remove a node of a Linked List
 void *dsSortedListRemove(dsList_t *list, void *value);
