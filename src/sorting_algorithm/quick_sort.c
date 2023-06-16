@@ -10,7 +10,7 @@ static void quick(void *arr, const int left, const int right, size_t elem_size, 
 
     //start swapping the values
     for(swapper = left+1; i <= right; i++){
-        if(compare(arr+(i*elem_size), arr+(pivot*elem_size)) < 0){ //changing the < to > changes the order of sorting
+        if(compare((char*) arr+(i*elem_size), (char*) arr+(pivot*elem_size)) < 0){ //changing the < to > changes the order of sorting
             swap(arr, elem_size, i, swapper);
             swap(arr, elem_size, pivot, swapper);
             pivot++;

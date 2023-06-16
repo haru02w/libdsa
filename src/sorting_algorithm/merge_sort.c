@@ -22,7 +22,7 @@ static void mergeArray(void *arr, void *arr_lower_half, void  *arr_upper_half, i
     top = bottom = 0;
 
     for(i = 0; i < size; i++){
-        if(top == top_size || ((bottom < size/2) && compare(arr_lower_half + (bottom * elem_size), arr_upper_half + (top * elem_size)) < 0)){
+        if(top == top_size || ((bottom < size/2) && compare((char*) arr_lower_half + (bottom * elem_size), (char*) arr_upper_half + (top * elem_size)) < 0)){
             swapArrays(arr, arr_lower_half, elem_size, i, bottom);
             bottom++;
 
@@ -39,7 +39,7 @@ static void mergeArray(void *arr, void *arr_lower_half, void  *arr_upper_half, i
 //main function
 //typeSize -> functions that get the size of a type to work with the array allocation
 //changeArray -> assing an array to another array, index by index
-void dsMergeSort(void *arr, size_t size, size_t elem_size, int (*compare)(void *, void *))
+void dsMergeSort(void *arr, int size, size_t elem_size, int (*compare)(void *, void *))
 {
     void *lower_half, *upper_half;
 

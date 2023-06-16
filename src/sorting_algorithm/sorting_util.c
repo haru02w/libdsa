@@ -8,12 +8,12 @@
 void swap(void *arr, size_t elem_size, int i, int j) {
     char *temp = malloc(elem_size); 
 
-    char *cur_pos = arr + (i * elem_size);  // Calculate the current position
+    char *cur_pos = (char*) arr + (i * elem_size);  // Calculate the current position
     //maybe use     ..(char *) in most pointer calculations
 
     memmove(temp, cur_pos, elem_size);
-    memmove(cur_pos, arr + (j * elem_size), elem_size);
-    memmove(arr + (j * elem_size), temp, elem_size);
+    memmove(cur_pos, (char*) arr + (j * elem_size), elem_size);
+    memmove((char*) arr + (j * elem_size), temp, elem_size);
 
     free(temp); 
 }
