@@ -23,16 +23,16 @@ dsList_t *dsNewList();
 dsList_t *dsNewSortedList(int (*compare)(const void *, const void *));
 
 // get size of a Linked List
-size_t dsListGetSize(dsList_t *list);
+unsigned dsListGetSize(dsList_t *list);
 
 // frees all list
 void dsDestroyList(dsList_t **list);
 
 // get the value at an index
-void *dsListGetValueAt(dsList_t *list, size_t index);
+void *dsListGetValueAt(dsList_t *list, unsigned index);
 
 // insert a new value into a Linked List (0 - error, 1 - sucess)
-bool dsListInsert(dsList_t *list, void *value, enum dsListFlags flag);
+bool dsListInsertAtEdge(dsList_t *list, void *value, enum dsListFlags flag);
 
 // insert a new value into a sorted Single Linked List (0 - error, 1 - sucess)
 bool dsSortedListInsert(dsList_t *list, void *value);

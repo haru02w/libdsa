@@ -1,7 +1,5 @@
 #ifndef LINKED_LIST_H_
 #define LINKED_LIST_H_
-
-#include <dsa.h>
 #include <stddef.h>
 
 typedef struct dsListNode {
@@ -11,7 +9,7 @@ typedef struct dsListNode {
 } dsListNode_t;
 
 typedef struct dsList {
-	size_t size;
+	unsigned size;
 	int (*compare)(const void *, const void *);
 
 	dsListNode_t *head;

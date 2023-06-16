@@ -3,54 +3,32 @@
 #include <stdio.h>
 #include <dsa.h>
 
-int comparator(const void *data_1, const void *data_2)
+// FIX: TESTING
+static int comparator(const void *x, const void *y)
 {
-	return *(int *)data_1 - *(int *)data_2;
-}
-
-void printList(dsList_t *list)
-{
-	for (int i = 0; i < dsListGetSize(list); i++) {
-		int *value = (int *)dsListGetValueAt(list, i);
-		if (value != NULL)
-			printf("%d ", *value);
-	}
-	putchar('\n');
+	return *(int *)x - *(int *)y;
 }
 
 int main(int argc, char *argv[])
 {
-	int values1[] = { 1, 7, 43, 7, 23, 76, 324, 65 };
-	int values_size1 = sizeof values1 / sizeof values1[0];
+	dsList_t *sorted_list = dsNewSortedList(comparator);
+	dsList_t *list_at_end = dsNewList();
 
-	dsList_t *list = dsNewSortedList(comparator);
-	if (dsListInsert(list, &values1[0], DS_LIST_AT_END) != false) {
-		printf("ERR - 0\n");
-		return 1;
+	int value[] = { 8, 3, 5, 9, 1, 0, 7, 4, 2, 6, 10 };
+	int size = (sizeof value / sizeof value[0]);
+
+	for (int i = 0; i < size; i++)
+		dsSortedListInsert(sorted_list, &value[i]);
+
+	while (dsListGetSize(sorted_list) > 0) {
+		int i = rand() % dsListGetSize(sorted_list);
+		dsListRemoveAt(sorted_list, i);
+
+		for (int j = 0; j < dsListGetSize(sorted_list); j++)
+			printf("%d ", *(int *)dsListGetValueAt(sorted_list, j));
+		putchar('\n');
 	}
 
-	printList(list);
-
-	for (int i = 0; i < values_size1; i++) {
-		if (i != 3 && dsSortedListInsert(list, &values1[i]) != true) {
-			printf("ERR - 1 = %d\n", i);
-			return 1;
-		}
-	}
-
-	printList(list);
-
-	if (dsSortedListRemove(list, &values1[6]) == NULL) {
-		printf("ERR - 2\n");
-		return 1;
-	}
-	printList(list);
-
-	if (dsSortedListRemove(list, &values1[11]) == NULL) {
-		printf("ERR - 2\n");
-		return 1;
-	}
-	printList(list);
-
-	return 0;
+	dsDestroyList(&sorted_list);
+	return EXIT_SUCCESS;
 }
