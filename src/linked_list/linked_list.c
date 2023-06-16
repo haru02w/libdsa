@@ -35,7 +35,7 @@ static inline dsList_t *NewList(int (*compare)(const void *, const void *))
 
 static dsListNode_t *dsListFindNodeAt(dsList_t *list, unsigned index)
 {
-	if (list == NULL || list->size <= 0 || index < 0 ||
+	if (list == NULL || list->size <= 0 ||
 	    index > list->size - 1)
 		return NULL;
 	if (last_node.node == NULL)
@@ -55,7 +55,7 @@ static dsListNode_t *dsListFindNodeAt(dsList_t *list, unsigned index)
 				     DS_LIST_AT_END :
 				     DS_LIST_AT_MID;
 
-	int i, direction;
+	unsigned i, direction;
 	dsListNode_t *tmp_node;
 	switch (start_flag) {
 	case DS_LIST_AT_START:
