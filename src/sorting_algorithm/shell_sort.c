@@ -4,7 +4,7 @@
 void dsShellSort(void *arr, unsigned size, size_t elem_size,
 		 int (*compare)(void *, void *))
 {
-	int i, j, gap;
+	unsigned i, j, gap;
 
 	//stating gap
 	gap = 1;

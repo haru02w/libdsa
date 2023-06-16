@@ -4,7 +4,7 @@
 void dsSelectionSort(void *arr, unsigned size, size_t elem_size,
 		     int (*compare)(void *, void *))
 {
-	int i, j, lowest;
+	unsigned i, j, lowest;
 
 	for (i = 0; i < size; i++) {
 		lowest = i;
