@@ -2,6 +2,7 @@
 #define DSA_H_
 
 #include <stdbool.h>
+#include <stddef.h>
 
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
@@ -44,10 +45,10 @@ dsAVLTree_t *dsAVLNewTree(int (*compare)(const void *, const void *));
 void dsAVLDestroyTree(dsAVLTree_t **tree);
 
 // Binary tree insertion with avl rotation
-void dsAVLInsert(dsAVLTree_t *tree, void *value); 
+void dsAVLInsert(dsAVLTree_t *tree, void *value);
 
 // Binary tree removal with avl rotation
-void dsAVLRemove(dsAVLTree_t *tree, void *key); 
+void dsAVLRemove(dsAVLTree_t *tree, void *key);
 
 // Print an entire avl tree
 void dsAVLPrintTree(dsAVLTree_t *tree, void (*print)(const void *));
@@ -67,19 +68,23 @@ void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,
 /***** Array Sorting Algorithms *****/
 
 //Insertion Sort
-void dsInsertionSort(void *arr, size_t size, size_t elem_size, int (*compare)(void *,void *));
+void dsInsertionSort(void *arr, unsigned size, size_t elem_size,
+		     int (*compare)(void *, void *));
 
 //Selection Sort
-void dsSelectionSort(void *arr, size_t size, size_t elem_size, int (*compare)( void *,  void *));
+void dsSelectionSort(void *arr, unsigned size, size_t elem_size,
+		     int (*compare)(void *, void *));
 
 //Shell Sort
-void dsShellSort(void *arr, size_t size, size_t elem_size, int (*compare)(void *,void *));
+void dsShellSort(void *arr, unsigned size, size_t elem_size,
+		 int (*compare)(void *, void *));
 
 //Quick Sort
-void dsQuickSort(void *arr, size_t size, size_t elem_size, int (*compare)(void *,void *));
+void dsQuickSort(void *arr, unsigned size, size_t elem_size,
+		 int (*compare)(void *, void *));
 
 //Merge Sort
-void dsMergeSort(void *arr, size_t size, size_t elem_size, int (*compare)(void *, void *));
-
+void dsMergeSort(void *arr, unsigned size, size_t elem_size,
+		 int (*compare)(void *, void *));
 
 #endif // !DSA_H_
