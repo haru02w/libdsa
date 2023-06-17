@@ -5,6 +5,8 @@
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
 typedef struct dsSLinkedList dsSLinkedList_t;
+typedef struct dsRedBlackTree dsRedBlackTree_t;
+typedef struct dsRBTNode dsRBTNode_t;
 
 /***** Linked Lists *****/
 enum dsLinkedListFlags { DS_AT_START = -1, DS_AT_END = 1 };
@@ -54,5 +56,22 @@ void *dsBSTRemoveNode(dsBinaryTree_t **node, void *key,
 // Binary search tree node search
 void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,
 		      int (*compare)(const void *, const void *));
+
+
+
+/***** Red Black Tree *****/
+
+//tree constructor
+dsRedBlackTree_t *dsRBTNew(int (*comparator)(const void *, const void *), void (*printer)(const void *));
+
+//add a new node in the tree
+void dsRBTAddNode(dsRedBlackTree_t *tree, void *element);
+
+//remove node from tree
+bool dsRBTRemoveElem(dsRedBlackTree_t *tree, void *elem);
+
+//function to print the Red Black Tree
+void dsPrintRBTree(dsRedBlackTree_t *tree);
+/***************************/
 
 #endif // !DSA_H_

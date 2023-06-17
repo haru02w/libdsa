@@ -1,6 +1,8 @@
 #ifndef DS_RED_BLACK_TREE_
 #define DS_RED_BLACK_TREE_
 #include <stddef.h>
+#include <dsa.h>
+#include "ds_red_black_tree.h"
 // enum Color{Black, Red};
 typedef struct dsRBTNode {
 	void *value;
@@ -15,7 +17,7 @@ typedef struct dsRBTNode {
 typedef struct dsRedBlackTree{
 	dsRBTNode_t *root;
 	int (*comparator)(const void *, const void *);
-	void *printer;
+	void (*printer)(const void *);
 	size_t count_nodes;
 	dsRBTNode_t *nil;
 
