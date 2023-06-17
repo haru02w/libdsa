@@ -7,24 +7,44 @@
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
 typedef struct dsAVLTree dsAVLTree_t;
-typedef struct dsSLinkedList dsSLinkedList_t;
+typedef struct dsSList dsSList_t;
+typedef struct dsSList dsStack_t;
+typedef struct dsSList dsQueue_t;
 
 /***** Linked Lists *****/
-enum dsLinkedListFlags { DS_AT_START = -1, DS_AT_END = 1 };
 
-// create a new Single Linked List
-dsSLinkedList_t *dsNewSLL();
-// traversal Single Linked List
-void dsSLLTraversal(dsSLinkedList_t *node, void (*fn)(void *));
-// add node to a Single Linked List (0 - error, 1 - sucess)
-bool dsSLLInsertNode(dsSLinkedList_t **head, void *value,
-		     enum dsLinkedListFlags flag);
-// Insert a Node in a sorted Single Linked List (0 - error, 1 - sucess)
-bool dsSLLInsertNodeSorted(dsSLinkedList_t **head, void *value,
-			   int (*compare)(const void *, const void *));
-// Remove a Node in a Single Linked List
-void *dsSLLRemove(dsSLinkedList_t **head, void *value,
-		  int (*compare)(const void *, const void *));
+/*** Stack ***/
+
+// create a new stack
+dsSList_t *newStack();
+
+// destroy the whole stack
+void dsDestroyStack(dsSList_t **stack);
+
+// push a value into the stack
+bool dsStackPush(dsSList_t *stack, void *value);
+
+// pop a value from the stack
+void *dsStackPop(dsSList_t *stack);
+
+// debug function
+void dsDebugStack(dsStack_t *stack, void (*fn)(void *));
+
+/*** Queue ***/
+// create a new queue
+dsQueue_t *newQueue();
+
+// destroy the whole queue
+void dsDestroyQueue(dsQueue_t **queue);
+
+// Enqueue a value
+bool dsQueueEnqueue(dsQueue_t *queue, void *value);
+
+// Dequeue a value
+void *dsQueueDequeue(dsQueue_t *queue);
+
+// Debug function
+void dsDebugQueue(dsQueue_t *queue, void (*fn)(void *));
 
 /***** Binary Trees *****/
 // Binary tree pre-order traversal
