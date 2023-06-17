@@ -5,11 +5,12 @@ Data Structure and Algorithms Library
 #### TODO
 - [ ] Arrays
     - [ ] Sorting Algorithms
-        - [ ] Insertion Sort
-        - [ ] Selection Sort
+        - [x] Insertion Sort
+        - [x] Selection Sort
         - [ ] Bubble Sort
-        - [ ] Merge Sort
-        - [ ] Quick Sort
+        - [x] Merge Sort
+        - [x] Shell sort
+        - [x] Quick Sort
         - [ ] Heap Sort
         - [ ] Radix Sort
         - [ ] Bucket Sort
@@ -21,25 +22,25 @@ Data Structure and Algorithms Library
     - [ ] Deletion
     - [ ] Search
     - [ ] Find Length
-- [ ] Queue (statically and dinamically allocated)
-    - [ ] Enqueue
-    - [ ] Dequeue
-- [ ] Stack (statically and dinamically allocated)
-    - [ ] Push
-    - [ ] Pop
-- [ ] Binary Tree
+- [x] Queue (dinamically allocated)
+    - [x] Enqueue
+    - [x] Dequeue
+- [x] Stack (dinamically allocated)
+    - [x] Push
+    - [x] Pop
+- [x] Binary Tree
     - [ ] traversals
-        - [ ] pre-order
-        - [ ] in-order
-        - [ ] post-order
+        - [x] pre-order
+        - [x] in-order
+        - [x] post-order
         - [ ] Breadth First Traversal
         - [ ] Depth First Traversals
-    - [ ] Find Heights
-    - [ ] Binary Search Tree
-        - [ ] Insertion
-        - [ ] Deletion
-        - [ ] Search
-        - [ ] AVL
+    - [x] Find Heights
+    - [x] Binary Search Tree
+        - [x] Insertion
+        - [x] Deletion
+        - [x] Search
+        - [x] AVL
         - [ ] Red-Black
 - [ ] Hash
 - [ ] Heap
