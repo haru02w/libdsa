@@ -3,11 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void ds_rebalance_add(dsRBTNode_t *node);
-void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node);
-dsRBTNode_t *sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node);
-void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node);
-
 // "construtor" da arvore
 dsRedBlackTree_t *dsRBTNew(int (*comparator)(const void *, const void *), void (*printer)(const void *)){
 	dsRedBlackTree_t *new = (dsRedBlackTree_t*) malloc(sizeof(dsRedBlackTree_t));
@@ -21,7 +16,6 @@ dsRedBlackTree_t *dsRBTNew(int (*comparator)(const void *, const void *), void (
 	new->nil->parent = NULL;
 	new->nil->right = NULL;
 	new->nil->value = NULL;
-	new->nil->tree_utils = new;
 	new->root = NULL;
 	
 	return new;
@@ -55,7 +49,6 @@ dsRBTNode_t *new_Node(dsRedBlackTree_t *tree, void *element){
 	dsRBTNode_t *new_node = (dsRBTNode_t*)malloc(sizeof(dsRBTNode_t));
 	new_node->left = new_node->right = tree->nil;
 	new_node->color = RED;
-	new_node->tree_utils = tree;
 	new_node->parent = NULL;
 	new_node->value = element;
 	new_node->height = 1;
@@ -90,39 +83,6 @@ void ds_RBT_left_rotate(dsRBTNode_t *node){
 	}
 	child_node->left = node;
 	node->parent = child_node;
-}
-
-/* função de adicionar nós */
-void dsRBTAddNode(dsRedBlackTree_t *tree, void *element){
-	dsRBTNode_t *node = tree->root;
-	dsRBTNode_t *prev_node;
-	dsRBTNode_t *new_node = new_Node(tree, element);
-	
-	if(node == NULL){
-		new_node->color = BLACK; //case 1 -> the new node is the tree ROOT
-		tree->root = new_node;
-		return;
-	}
-
-	while (node != tree->nil){
-		prev_node = node;
-		if((tree->comparator(node->value, element)) < 0){
-			node = node->left;
-		}
-		else{
-			node = node->right;
-		}
-	}
-	new_node->parent = prev_node;
-	if(tree->comparator(prev_node->value, element) < 0){
-		prev_node->left = new_node;
-	}
-	else{
-		prev_node->right = new_node;
-	}
-	ds_rebalance_add(new_node);
-	tree->count_nodes++;
-	
 }
 
 /* função de rebalancear a arvore quando adicionado*/
@@ -161,63 +121,41 @@ void ds_rebalance_add(dsRBTNode_t *node){
 	}
 }
 
-/* função de remover nó a aprtir do elemento */
-bool dsRBTRemoveElem(dsRedBlackTree_t *tree, void *elem){
-	dsRBTNode_t *node;
-	node = tree->root;
-	while(node != tree->nil){
-		if(tree->comparator(node->value, elem) == 0){
-			ds_removeNode(tree, node);
-			return true;
-		}
-		if(tree->comparator(node->value, elem) < 0){
+/* função de adicionar nós */
+void dsRBTAddNode(dsRedBlackTree_t *tree, void *element){
+	dsRBTNode_t *node = tree->root;
+	dsRBTNode_t *prev_node;
+	dsRBTNode_t *new_node = new_Node(tree, element);
+	
+	if(node == NULL){
+		new_node->color = BLACK; //case 1 -> the new node is the tree ROOT
+		tree->root = new_node;
+		return;
+	}
+
+	while (node != tree->nil){
+		prev_node = node;
+		if((tree->comparator(node->value, element)) < 0){
 			node = node->left;
 		}
 		else{
 			node = node->right;
 		}
 	}
-	return false;
-}
-
-/* função de remover no*/
-void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node){
-	dsRBTNode_t *removed_node = NULL;
-	dsRBTNode_t *child_node = NULL;
-	dsRBTNode_t *nil = tree->nil;
-
-	if(node->left == nil  ||  node->right == nil)
-		removed_node = node;
-	else
-		removed_node = sucessor_node(tree, node);
-	
-	if(removed_node->left != nil){
-		child_node = removed_node->left;
+	new_node->parent = prev_node;
+	if(tree->comparator(prev_node->value, element) < 0){
+		prev_node->left = new_node;
 	}
 	else{
-		child_node = removed_node->right;
+		prev_node->right = new_node;
 	}
-	child_node->parent = removed_node->parent;
-
-	if(removed_node->parent == nil)
-		tree->root = child_node;
-	else if(removed_node == removed_node->parent->left)
-		removed_node->parent->left = child_node;
-	else
-		removed_node->parent->right = child_node;
+	ds_rebalance_add(new_node);
+	tree->count_nodes++;
 	
-	if(removed_node != node)
-		node->value = removed_node->value;
-	
-	if(removed_node->color == BLACK)
-		ds_rebanlance_rm(tree, child_node);
-	
-	free(removed_node);
-	tree->count_nodes--;
 }
 
 /* função q rebalaceia essa bomba quando remove*/
-void ds_rebanlance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+void ds_rebalance_rm(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 
 	while(node != tree->root  &&  node->color == BLACK){
 		if(node == node->parent->left){
@@ -292,36 +230,104 @@ dsRBTNode_t *sucessor_node(dsRedBlackTree_t *tree, dsRBTNode_t *node){
 	
 }
 
+/* função de remover no*/
+void ds_removeNode(dsRedBlackTree_t *tree, dsRBTNode_t *node){
+	dsRBTNode_t *removed_node = NULL;
+	dsRBTNode_t *child_node = NULL;
+	dsRBTNode_t *nil = tree->nil;
+
+	if(node->left == nil  ||  node->right == nil)
+		removed_node = node;
+	else
+		removed_node = sucessor_node(tree, node);
+	
+	if(removed_node->left != nil){
+		child_node = removed_node->left;
+	}
+	else{
+		child_node = removed_node->right;
+	}
+	child_node->parent = removed_node->parent;
+
+	if(removed_node->parent == nil)
+		tree->root = child_node;
+	else if(removed_node == removed_node->parent->left)
+		removed_node->parent->left = child_node;
+	else
+		removed_node->parent->right = child_node;
+	
+	if(removed_node != node)
+		node->value = removed_node->value;
+	
+	if(removed_node->color == BLACK)
+		ds_rebalance_rm(tree, child_node);
+	
+	free(removed_node);
+	tree->count_nodes--;
+}
+
+/* função de remover nó a aprtir do elemento */
+bool dsRBTRemoveElem(dsRedBlackTree_t *tree, void *elem){
+	dsRBTNode_t *node;
+	node = tree->root;
+	while(node != tree->nil){
+		if(tree->comparator(node->value, elem) == 0){
+			ds_removeNode(tree, node);
+			return true;
+		}
+		if(tree->comparator(node->value, elem) < 0){
+			node = node->left;
+		}
+		else{
+			node = node->right;
+		}
+	}
+	return false;
+}
 
 
 
-
-void dsPrintRBT(dsRBTNode_t *node, int n) {
+void dsPrintRBT(dsRedBlackTree_t *tree, dsRBTNode_t *node, int n) {
     int i;
-    if(node){
-        dsPrintRBT(node->right, n + 1);
+    if(node != NULL){
+        dsPrintRBT(tree, node->right, n + 1);
         printf("\n\n");
 
         for(i = 0; i < n; i++)
             printf("\t");
-
         if(node->color == RED)
 			printf("RED: ");
-			
 		else
 			printf("BLACK: ");
-		node->tree_utils->printer(node->value);
-        dsPrintRBT(node->left, n + 1);
+		if(node->value != NULL){
+			printf("nil");
+		}
+		else
+			tree->printer(node->value);
+        dsPrintRBT(tree, node->left, n + 1);
     }
-   
 	
 }
 void dsPrintRBTree(dsRedBlackTree_t *tree){
-	dsPrintRBT(tree->root, 0);
+	dsPrintRBT(tree, tree->root, 0);
+	printf("\n--------------\n\n");
 }
 
+//função que libera a arvore
+void dsRBTclearTree(dsRBTNode_t *node){
+	if(node->value != NULL){
+		dsRBTclearTree(node->right);
+		dsRBTclearTree(node->left);
+		free(node->value);
+		free(node);
+	}
+}
 
-
-
+//função que apaga a arvore
+void dsRBTclear(dsRedBlackTree_t *tree){
+	dsRBTclearTree(tree->root);
+	free(tree->nil);
+	free(tree);
+}
 
 

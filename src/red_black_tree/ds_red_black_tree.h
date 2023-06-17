@@ -1,17 +1,14 @@
 #ifndef DS_RED_BLACK_TREE_
 #define DS_RED_BLACK_TREE_
 #include <stddef.h>
-#include <dsa.h>
-#include "ds_red_black_tree.h"
-// enum Color{Black, Red};
+enum Color{BLACK, RED};
 typedef struct dsRBTNode {
 	void *value;
 	size_t height;
-	enum Color{BLACK, RED} color;
+	enum Color color;
 	struct dsRBTNode *left;
     struct dsRBTNode *right;
 	struct dsRBTNode *parent;
-	dsRedBlackTree_t *tree_utils;
 } dsRBTNode_t;
 
 typedef struct dsRedBlackTree{

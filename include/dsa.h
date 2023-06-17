@@ -72,6 +72,9 @@ bool dsRBTRemoveElem(dsRedBlackTree_t *tree, void *elem);
 
 //function to print the Red Black Tree
 void dsPrintRBTree(dsRedBlackTree_t *tree);
+
+//function tre free the Red Black Tree
+void dsRBTclear(dsRedBlackTree_t *tree);
 /***************************/
 
 #endif // !DSA_H_
