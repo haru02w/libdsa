@@ -10,7 +10,7 @@ void printstack(void *value)
 int main()
 {
 	int values[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-	dsStack_t *stack = newStack();
+	dsStack_t *stack = dsNewStack();
 	for (size_t i = 0; i < (sizeof values / sizeof values[0]); i++)
 		dsStackPush(stack, &values[i]);
 	dsDebugStack(stack, printstack);
