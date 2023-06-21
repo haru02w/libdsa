@@ -3,7 +3,7 @@
 #include "./binary_avl_tree.h"
 
 
-dsAVLTree_t *dsAVLNewTree(int (*comparator)(const void *, const void *))
+dsAVLTree_t *dsNewAVLTree(int (*comparator)(const void *, const void *))
 {
 	dsAVLTree_t *new_tree = malloc(sizeof(dsAVLTree_t));
 
@@ -43,7 +43,7 @@ static void dsAVLClearNode(dsAVLNode_t *node)
 }
 
 
-void dsAVLDestroyTree(dsAVLTree_t **tree)
+void dsDestroyAVLTree(dsAVLTree_t **tree)
 {
 	if(*tree == NULL)
 		return;

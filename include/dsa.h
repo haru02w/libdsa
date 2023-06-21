@@ -7,6 +7,7 @@
 /***** Opaque datatypes *****/
 typedef struct dsBinaryTree dsBinaryTree_t;
 typedef struct dsAVLTree dsAVLTree_t;
+typedef struct dsRBTree dsRBTree_t;
 typedef struct dsSList dsSList_t;
 typedef struct dsSList dsStack_t;
 typedef struct dsSList dsQueue_t;
@@ -16,7 +17,7 @@ typedef struct dsSList dsQueue_t;
 /*** Stack ***/
 
 // create a new stack
-dsSList_t *newStack();
+dsSList_t *dsNewStack();
 
 // destroy the whole stack
 void dsDestroyStack(dsSList_t **stack);
@@ -32,7 +33,7 @@ void dsDebugStack(dsStack_t *stack, void (*fn)(void *));
 
 /*** Queue ***/
 // create a new queue
-dsQueue_t *newQueue();
+dsQueue_t *dsNewQueue();
 
 // destroy the whole queue
 void dsDestroyQueue(dsQueue_t **queue);
@@ -58,21 +59,6 @@ void dsBiTreePostTraversal(dsBinaryTree_t *node, void (*fn)(void *));
 
 // TODO: Breadth First Traversal, Depth First Traversals
 
-// Creates a new avl tree
-dsAVLTree_t *dsAVLNewTree(int (*compare)(const void *, const void *));
-
-// Destroy the current avl tree
-void dsAVLDestroyTree(dsAVLTree_t **tree);
-
-// Binary tree insertion with avl rotation
-void dsAVLInsert(dsAVLTree_t *tree, void *value);
-
-// Binary tree removal with avl rotation
-void dsAVLRemove(dsAVLTree_t *tree, void *key);
-
-// Print an entire avl tree
-void dsAVLPrintTree(dsAVLTree_t *tree, void (*print)(const void *));
-
 // Binary search tree node insertion
 void dsBSTInsertNode(dsBinaryTree_t **node, void *value,
 		     int (*compare)(const void *, const void *));
@@ -85,6 +71,38 @@ void *dsBSTRemoveNode(dsBinaryTree_t **node, void *key,
 void *dsBSTSearchNode(dsBinaryTree_t *node, void *key,
 		      int (*compare)(const void *, const void *));
 
+/*** AVL trees ***/
+// Creates a new avl tree
+dsAVLTree_t *dsNewAVLTree(int (*compare)(const void *, const void *));
+
+// Destroy the current avl tree
+void dsDestroyAVLTree(dsAVLTree_t **tree);
+
+// Binary tree insertion with avl rotation
+void dsAVLInsert(dsAVLTree_t *tree, void *value);
+
+// Binary tree removal with avl rotation
+void dsAVLRemove(dsAVLTree_t *tree, void *key);
+
+// Print an entire avl tree
+void dsAVLPrintTree(dsAVLTree_t *tree, void (*print)(const void *));
+
+/*** red black tree ***/
+
+//create a new Red Black Tree
+dsRBTree_t *dsNewRBTree(int (*compare)(const void *, const void *));
+
+// get the size of the tree
+size_t dsRBGetSize(dsRBTree_t *rbtree);
+
+// insert the value pointer into a new node
+bool dsRBInsert(dsRBTree_t *rbtree, void *value);
+
+void *dsRBRemove(dsRBTree_t *rbtree, void *value);
+
+void dsRBPrintTree(dsRBTree_t *rbtree, void (*print)(const void *));
+
+void dsDestroyRBTree(dsRBTree_t **tree);
 /***** Array Sorting Algorithms *****/
 
 //Insertion Sort

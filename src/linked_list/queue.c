@@ -11,7 +11,7 @@ static dsQueueNode_t *newQueueNode(void *value)
 	return new_queue;
 }
 
-dsQueue_t *newQueue()
+dsQueue_t *dsNewQueue()
 {
 	dsQueue_t *new_queue = malloc(sizeof(dsQueue_t));
 	*new_queue = (dsQueue_t){

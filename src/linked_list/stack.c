@@ -11,7 +11,7 @@ static dsStackNode_t *newStackNode(void *value)
 	return new_stack;
 }
 
-dsStack_t *newStack()
+dsStack_t *dsNewStack()
 {
 	dsStack_t *new_stack = malloc(sizeof(dsStack_t));
 	*new_stack = (dsStack_t){
