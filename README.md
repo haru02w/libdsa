@@ -41,7 +41,7 @@ Data Structure and Algorithms Library
         - [x] Deletion
         - [x] Search
         - [x] AVL
-        - [ ] Red-Black
+        - [x] Red-Black
 - [ ] Hash
 - [ ] Heap
 - [ ] Matrix
