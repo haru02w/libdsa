@@ -3,8 +3,10 @@ project(libdsa C)
 
 # Set the C standard required
 set(CMAKE_C_STANDARD 11)
-# clang-format flags
+# set clang-format flags
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# set cmake debug target
+set(CMAKE_BUILD_TYPE Debug)
 
 # Ensure the build directory exists
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR})

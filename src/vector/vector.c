@@ -2,7 +2,6 @@
 #include "../memory_manager.h"
 #include "./vector.h"
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 dsVector_t *dsNewVector(size_t elem_size)
@@ -50,7 +49,7 @@ dsError_t dsVectorSetCapacity(dsVector_t *vec, unsigned capacity_length)
 	return DS_SUCESS;
 }
 
-unsigned dsVectorGetCapacity(dsVector_t *vec)
+unsigned dsVectorGetCapacity(const dsVector_t *vec)
 {
 	if (vec == NULL)
 		return DS_FAILURE;
@@ -58,7 +57,7 @@ unsigned dsVectorGetCapacity(dsVector_t *vec)
 	return vec->capacity;
 }
 
-unsigned dsVectorGetLength(dsVector_t *vec)
+unsigned dsVectorGetLength(const dsVector_t *vec)
 {
 	if (vec == NULL)
 		return DS_FAILURE;
@@ -66,7 +65,7 @@ unsigned dsVectorGetLength(dsVector_t *vec)
 	return vec->lenght;
 }
 
-bool dsVectorIsEmpty(dsVector_t *vec)
+bool dsVectorIsEmpty(const dsVector_t *vec)
 {
 	return dsVectorGetLength(vec) == 0 ? true : false;
 }
@@ -75,7 +74,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 {
 	if (vec == NULL || data == NULL)
 		return DS_INVALID_POINTER;
-	if (index < DS_AT_START || index > vec->capacity)
+	if (index < DS_AT_START || index > (int)vec->capacity)
 		return DS_INDEX_OUT_OF_BOUNDS;
 
 	if (vec->lenght + 1 > vec->capacity) {
@@ -95,7 +94,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 		memcpy(vec->data + vec->lenght * vec->elem_size, data,
 		       vec->elem_size);
 		break;
-	default:
+	default: // WARN: SEGFAULTING
 		memmove(vec->data + (index + 1) * vec->elem_size,
 			vec->data + index * vec->elem_size,
 			(index - vec->lenght) * vec->elem_size);
@@ -106,7 +105,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 	return DS_SUCESS;
 }
 
-dsError_t dsVectorRemove(dsVector_t *vec, int index)
+dsError_t dsVectorRemove(const dsVector_t *vec, int index)
 {
 	if (vec == NULL)
 		return DS_INVALID_POINTER;
@@ -131,7 +130,7 @@ dsError_t dsVectorRemove(dsVector_t *vec, int index)
 	return DS_SUCESS;
 }
 
-void *dsVectorGetValueAt(dsVector_t *vec, int index)
+void *dsVectorGetValueAt(const dsVector_t *vec, int index)
 {
 	if (vec == NULL || vec->lenght <= 0)
 		return NULL;
