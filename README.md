@@ -1,16 +1,19 @@
 Data Structure and Algorithms Library
+(WARN: Complete rewrite soon)
+
 
 [Coding Style](docs/coding_style.md)
 
 #### TODO
 - [ ] Arrays
+    - [~] Dynamic Arrays (Vector)
     - [ ] Sorting Algorithms
-        - [x] Insertion Sort
-        - [x] Selection Sort
+        - [ ] Insertion Sort
+        - [ ] Selection Sort
         - [ ] Bubble Sort
-        - [x] Merge Sort
-        - [x] Shell sort
-        - [x] Quick Sort
+        - [ ] Merge Sort
+        - [ ] Shell sort
+        - [ ] Quick Sort
         - [ ] Heap Sort
         - [ ] Radix Sort
         - [ ] Bucket Sort
@@ -22,26 +25,26 @@ Data Structure and Algorithms Library
     - [ ] Deletion
     - [ ] Search
     - [ ] Find Length
-- [x] Queue (dinamically allocated)
-    - [x] Enqueue
-    - [x] Dequeue
-- [x] Stack (dinamically allocated)
-    - [x] Push
-    - [x] Pop
-- [x] Binary Tree
+- [ ] Queue (dinamically allocated)
+    - [ ] Enqueue
+    - [ ] Dequeue
+- [ ] Stack (dinamically allocated)
+    - [ ] Push
+    - [ ] Pop
+- [ ] Binary Tree
     - [ ] traversals
-        - [x] pre-order
-        - [x] in-order
-        - [x] post-order
+        - [ ] pre-order
+        - [ ] in-order
+        - [ ] post-order
         - [ ] Breadth First Traversal
         - [ ] Depth First Traversals
-    - [x] Find Heights
-    - [x] Binary Search Tree
-        - [x] Insertion
-        - [x] Deletion
-        - [x] Search
-        - [x] AVL
-        - [x] Red-Black
+    - [ ] Find Heights
+    - [ ] Binary Search Tree
+        - [ ] Insertion
+        - [ ] Deletion
+        - [ ] Search
+        - [ ] AVL
+        - [ ] Red-Black
 - [ ] Hash
 - [ ] Heap
 - [ ] Matrix
@@ -49,3 +52,4 @@ Data Structure and Algorithms Library
 * More stuff will be added as we learn
 
 Made with ❤  for CS students
+
