@@ -97,7 +97,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 	default: // WARN: SEGFAULTING
 		memmove(vec->data + (index + 1) * vec->elem_size,
 			vec->data + index * vec->elem_size,
-			(index - vec->lenght) * vec->elem_size);
+			(vec->lenght - index) * vec->elem_size);
 		memcpy(vec->data + index * vec->elem_size, data,
 		       vec->elem_size);
 	}
@@ -105,12 +105,12 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 	return DS_SUCESS;
 }
 
-dsError_t dsVectorRemove(const dsVector_t *vec, int index)
+dsError_t dsVectorRemove(dsVector_t *vec, int index)
 {
 	if (vec == NULL)
 		return DS_INVALID_POINTER;
 
-	if (index < DS_AT_START || index > vec->lenght)
+	if (index < DS_AT_START || index >= (int)vec->lenght)
 		return DS_INDEX_OUT_OF_BOUNDS;
 
 	switch (index) {
@@ -125,8 +125,9 @@ dsError_t dsVectorRemove(const dsVector_t *vec, int index)
 	default:
 		memmove(vec->data + index * vec->elem_size,
 			vec->data + (index + 1) * vec->elem_size,
-			(index - vec->lenght - 1) * vec->elem_size);
+			(vec->lenght - index - 1) * vec->elem_size);
 	}
+	--vec->lenght;
 	return DS_SUCESS;
 }
 
