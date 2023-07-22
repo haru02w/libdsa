@@ -1,11 +1,13 @@
 #include <stddef.h>
 #include <string.h>
+#include "dsa_error.h"
+
 #include "./vector.h"
 
-dsVector_t *dsNewVector(size_t elem_size)
+ds_vector_t *ds_new_vector(size_t elem_size)
 {
-	dsVector_t *new = gmm.malloc(sizeof(dsVector_t));
-	*new = (dsVector_t){
+	ds_vector_t *new = gmm.malloc(sizeof(ds_vector_t));
+	*new = (ds_vector_t){
 		.lenght = 0,
 		.capacity = 0,
 		.mm = &gmm,
@@ -15,10 +17,10 @@ dsVector_t *dsNewVector(size_t elem_size)
 	return new;
 }
 
-dsVector_t *dsNewVector_mm(size_t elem_size, dsMemoryManager_t *mm)
+ds_vector_t *ds_new_vector_mm(size_t elem_size, ds_memory_manager_t *mm)
 {
-	dsVector_t *new = mm->malloc(sizeof(dsVector_t));
-	*new = (dsVector_t){
+	ds_vector_t *new = mm->malloc(sizeof(ds_vector_t));
+	*new = (ds_vector_t){
 		.lenght = 0,
 		.capacity = 0,
 		.mm = mm,
@@ -28,17 +30,17 @@ dsVector_t *dsNewVector_mm(size_t elem_size, dsMemoryManager_t *mm)
 	return new;
 }
 
-void dsDeleteVector(dsVector_t *vec)
+void ds_delete_vector(ds_vector_t *vec)
 {
 	if (vec == NULL)
 		return;
 
-	dsMemoryManager_t *mm = vec->mm;
+	ds_memory_manager_t *mm = vec->mm;
 	mm->free(vec->data);
 	mm->free(vec);
 }
 
-dsError_t dsVectorSetCapacity(dsVector_t *vec, unsigned capacity_length)
+ds_error_t ds_vector_set_capacity(ds_vector_t *vec, unsigned capacity_length)
 {
 	if (vec == NULL)
 		return DS_INVALID_POINTER;
@@ -52,12 +54,12 @@ dsError_t dsVectorSetCapacity(dsVector_t *vec, unsigned capacity_length)
 		return DS_FAILURE;
 
 	vec->capacity = capacity_length;
-	vec->data = (dsByte_t *)new_space;
+	vec->data = (ds_byte_t *)new_space;
 
 	return DS_SUCESS;
 }
 
-unsigned dsVectorGetCapacity(const dsVector_t *vec)
+unsigned ds_vector_get_capacity(const ds_vector_t *vec)
 {
 	if (vec == NULL)
 		return DS_FAILURE;
@@ -65,7 +67,7 @@ unsigned dsVectorGetCapacity(const dsVector_t *vec)
 	return vec->capacity;
 }
 
-unsigned dsVectorGetLength(const dsVector_t *vec)
+unsigned ds_vector_get_length(const ds_vector_t *vec)
 {
 	if (vec == NULL)
 		return DS_FAILURE;
@@ -73,12 +75,12 @@ unsigned dsVectorGetLength(const dsVector_t *vec)
 	return vec->lenght;
 }
 
-dsBool_t dsVectorIsEmpty(const dsVector_t *vec)
+ds_bool_t ds_vector_is_empty(const ds_vector_t *vec)
 {
-	return dsVectorGetLength(vec) == 0 ? DS_TRUE : DS_FALSE;
+	return ds_vector_get_length(vec) == 0 ? DS_TRUE : DS_FALSE;
 }
 
-dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
+ds_error_t ds_vector_insert(ds_vector_t *vec, void *data, int index)
 {
 	if (vec == NULL || data == NULL)
 		return DS_INVALID_POINTER;
@@ -86,8 +88,8 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 		return DS_INDEX_OUT_OF_BOUNDS;
 
 	if (vec->lenght + 1 > vec->capacity) {
-		dsError_t error_code =
-			dsVectorSetCapacity(vec, vec->lenght + 1);
+		ds_error_t error_code =
+			ds_vector_set_capacity(vec, vec->lenght + 1);
 		if (error_code)
 			return error_code;
 	}
@@ -113,7 +115,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 	return DS_SUCESS;
 }
 
-dsError_t dsVectorRemove(dsVector_t *vec, int index, dsBool_t shrink)
+ds_error_t ds_vector_remove(ds_vector_t *vec, int index, ds_bool_t shrink)
 {
 	if (vec == NULL)
 		return DS_INVALID_POINTER;
@@ -146,7 +148,7 @@ dsError_t dsVectorRemove(dsVector_t *vec, int index, dsBool_t shrink)
 	return DS_SUCESS;
 }
 
-void *dsVectorGetValueAt(const dsVector_t *vec, int index)
+void *ds_vector_get_value_at(const ds_vector_t *vec, int index)
 {
 	if (vec == NULL || vec->lenght <= 0)
 		return NULL;
@@ -163,7 +165,7 @@ void *dsVectorGetValueAt(const dsVector_t *vec, int index)
 	}
 }
 
-dsError_t dsVectorSetValueAt(dsVector_t *vec, void *data, int index)
+ds_error_t ds_vector_set_value_at(ds_vector_t *vec, void *data, int index)
 {
 	if (vec == NULL || vec->lenght <= 0)
 		return DS_INVALID_POINTER;
@@ -185,7 +187,7 @@ dsError_t dsVectorSetValueAt(dsVector_t *vec, void *data, int index)
 	return DS_SUCESS;
 }
 
-dsError_t dsVectorShrink(dsVector_t *vec)
+ds_error_t ds_vector_shrink(ds_vector_t *vec)
 {
 	if (vec == NULL)
 		return DS_INVALID_POINTER;

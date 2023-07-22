@@ -9,22 +9,23 @@ const int DS_SUCESS_CODE = 0;
 #define _MAX(x,y) (x > y ? x : y)
 
 // functions
-int dsStackPush(){ ... }
-void _fixSomething(){ ... }
+int ds_stack_push(){ ... }
+void _fix_something(){ ... }
 
 // structs, typedefs, unions
-typedef struct dsLinkedList {
+typedef struct ds_linked_list {
     // local variables (no need for prefix)
     int prefer_snake_case;
-    struct dsLinkedList *next;
-} dsLinkedList_t;
-struct _helperType {
+    struct ds_linked_list *next;
+} ds_linked_list_t;
+
+struct _helper_type {
     int snake_case_still;
 };
 
 // global variables
-int dsGlobalVariable = 0;
-int _hiddenGlobalVariable = 0;
+int ds_global_variable = 0;
+int _hidden_global_variable = 0;
 
 // file names
 "files_should_use_names_like_this.txt"
