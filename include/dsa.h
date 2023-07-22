@@ -41,7 +41,7 @@ unsigned dsVectorGetCapacity(const dsVector_t *vec);
 unsigned dsVectorGetLength(const dsVector_t *vec);
 bool dsVectorIsEmpty(const dsVector_t *vec);
 dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index);
-dsError_t dsVectorRemove(dsVector_t *vec, int index);
+dsError_t dsVectorRemove(dsVector_t *vec, int index,bool shrink);
 void *dsVectorGetValueAt(const dsVector_t *vec, int index);
 dsError_t dsVectorSetValueAt(dsVector_t *vec, void *data, int index);
 

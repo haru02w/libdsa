@@ -94,7 +94,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 		memcpy(vec->data + vec->lenght * vec->elem_size, data,
 		       vec->elem_size);
 		break;
-	default: // WARN: SEGFAULTING
+	default:
 		memmove(vec->data + (index + 1) * vec->elem_size,
 			vec->data + index * vec->elem_size,
 			(vec->lenght - index) * vec->elem_size);
@@ -105,7 +105,7 @@ dsError_t dsVectorInsert(dsVector_t *vec, void *data, int index)
 	return DS_SUCESS;
 }
 
-dsError_t dsVectorRemove(dsVector_t *vec, int index)
+dsError_t dsVectorRemove(dsVector_t *vec, int index, bool shrink)
 {
 	if (vec == NULL)
 		return DS_INVALID_POINTER;
@@ -119,8 +119,6 @@ dsError_t dsVectorRemove(dsVector_t *vec, int index)
 			(vec->lenght - 1) * vec->elem_size);
 		break;
 	case DS_AT_END:
-		memset(vec->data + (vec->lenght - 1) * vec->elem_size, 0,
-		       vec->elem_size);
 		break;
 	default:
 		memmove(vec->data + index * vec->elem_size,
@@ -128,6 +126,15 @@ dsError_t dsVectorRemove(dsVector_t *vec, int index)
 			(vec->lenght - index - 1) * vec->elem_size);
 	}
 	--vec->lenght;
+
+	if (shrink) {
+		void *new_space =
+			realloc(vec->data, vec->lenght * vec->elem_size);
+		if (new_space == NULL && vec->lenght > 0)
+			return DS_FAILURE;
+		vec->data = new_space;
+		vec->capacity = vec->lenght;
+	}
 	return DS_SUCESS;
 }
 
@@ -167,5 +174,23 @@ dsError_t dsVectorSetValueAt(dsVector_t *vec, void *data, int index)
 		memcpy(vec->data + index * vec->elem_size, data,
 		       vec->elem_size);
 	}
+	return DS_SUCESS;
+}
+
+dsError_t dsVectorShrink(dsVector_t *vec)
+{
+	if (vec == NULL)
+		return DS_INVALID_POINTER;
+	if (vec->lenght <= 0 || vec->lenght > vec->capacity)
+		return DS_INVALID_SIZE;
+
+	if (vec->lenght == vec->capacity)
+		return DS_SUCESS;
+
+	void *new_space = realloc(vec->data, vec->lenght * vec->elem_size);
+	if (new_space == NULL)
+		return DS_FAILURE;
+	vec->data = new_space;
+	vec->capacity = vec->lenght;
 	return DS_SUCESS;
 }

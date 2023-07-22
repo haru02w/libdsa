@@ -24,14 +24,15 @@ int main(void)
 	}
 
 	i = 1;
-	assert(dsVectorRemove(vec, 1) == DS_SUCESS);
+	assert(dsVectorRemove(vec, 1, false) == DS_SUCESS);
 	assert(*(int *)dsVectorGetValueAt(vec, 0) == 0);
 	assert(*(int *)dsVectorGetValueAt(vec, 1) == 2);
 
-	assert(dsVectorRemove(vec, DS_AT_START) == DS_SUCESS);
-	assert(dsVectorRemove(vec, DS_AT_END) == DS_SUCESS);
+	assert(dsVectorRemove(vec, DS_AT_START, false) == DS_SUCESS);
+	assert(dsVectorRemove(vec, DS_AT_END, true) == DS_SUCESS);
 
 	assert(dsVectorIsEmpty(vec) == true);
+	assert(dsVectorGetCapacity(vec) == 0);
 
 	return EXIT_SUCCESS;
 }
