@@ -1,8 +1,8 @@
 #ifndef VECTOR_H_
 #define VECTOR_H_
 
-#include "dsa.h"
 #include <stddef.h>
+#include "dsa.h"
 
 typedef struct dsVector {
 	unsigned lenght;
@@ -11,7 +11,7 @@ typedef struct dsVector {
 
 	dsMemoryManager_t *mm;
 
-	byte *data;
+	dsByte_t *data;
 } dsVector_t;
 
 #endif // !VECTOR_H_
