@@ -1,9 +1,9 @@
 #ifndef DSA_EXTRA_H_
 #define DSA_EXTRA_H_
 
-typedef unsigned char dsByte_t;
+typedef unsigned char ds_byte_t;
 
-typedef enum { DS_FALSE, DS_TRUE } dsBool_t;
+typedef enum { DS_FALSE, DS_TRUE } ds_bool_t;
 
 // General purpose index specifier
 enum dsIndex {

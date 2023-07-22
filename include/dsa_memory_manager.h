@@ -12,6 +12,6 @@ typedef struct dsMemoryManager {
 	void *(*calloc)(size_t num, size_t size);
 	void *(*realloc)(void *ptr, size_t new_size);
 	void (*free)(void *ptr);
-} dsMemoryManager_t;
-extern dsMemoryManager_t gmm;
+} ds_memory_manager_t;
+extern ds_memory_manager_t gmm;
 #endif // !DSA_MEMORY_MANAGER_H_
