@@ -6,7 +6,7 @@ Data Structure and Algorithms Library
 
 #### TODO
 - [ ] Arrays
-    - [~] Dynamic Arrays (Vector)
+    - [x] Dynamic Arrays (Vector)
     - [ ] Sorting Algorithms
         - [ ] Insertion Sort
         - [ ] Selection Sort

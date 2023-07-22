@@ -34,7 +34,7 @@ void dsDeleteVector(dsVector_t *vec)
 {
 	if (vec == NULL)
 		return;
-	
+
 	dsMemoryManager_t *mm = vec->mm;
 	mm->free(vec->data);
 	mm->free(vec);
