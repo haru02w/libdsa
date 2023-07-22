@@ -6,5 +6,4 @@ ds_memory_manager_t gmm = {
 	.calloc = calloc,
 	.malloc = malloc,
 	.realloc = realloc,
-	.aligned_alloc = aligned_alloc,
 };
