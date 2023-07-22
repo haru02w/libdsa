@@ -30,6 +30,16 @@ dsVector_t *dsNewVector_mm(size_t elem_size, dsMemoryManager_t *mm)
 	return new;
 }
 
+void dsDeleteVector(dsVector_t *vec)
+{
+	if (vec == NULL)
+		return;
+	
+	dsMemoryManager_t *mm = vec->mm;
+	mm->free(vec->data);
+	mm->free(vec);
+}
+
 dsError_t dsVectorSetCapacity(dsVector_t *vec, unsigned capacity_length)
 {
 	if (vec == NULL)
@@ -128,8 +138,8 @@ dsError_t dsVectorRemove(dsVector_t *vec, int index, bool shrink)
 	--vec->lenght;
 
 	if (shrink) {
-		void *new_space =
-			realloc(vec->data, vec->lenght * vec->elem_size);
+		void *new_space = vec->mm->realloc(
+			vec->data, vec->lenght * vec->elem_size);
 		if (new_space == NULL && vec->lenght > 0)
 			return DS_FAILURE;
 		vec->data = new_space;
@@ -187,7 +197,8 @@ dsError_t dsVectorShrink(dsVector_t *vec)
 	if (vec->lenght == vec->capacity)
 		return DS_SUCESS;
 
-	void *new_space = realloc(vec->data, vec->lenght * vec->elem_size);
+	void *new_space =
+		vec->mm->realloc(vec->data, vec->lenght * vec->elem_size);
 	if (new_space == NULL)
 		return DS_FAILURE;
 	vec->data = new_space;
