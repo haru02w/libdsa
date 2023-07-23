@@ -11,7 +11,7 @@ void *ds_malloc(size_t size)
 
 void *ds_calloc(size_t num, size_t size)
 {
-	if (num * size > SIZE_MAX / size)
+	if (size > SIZE_MAX / num)
 		/* (a * x) > INT_MAX: Overflow */
 		return NULL;
 
