@@ -9,7 +9,7 @@ int main(void)
 	ds_vector_t *vec = ds_new_vector(sizeof(int));
 	assert(ds_vector_set_capacity(vec, 10) == DS_SUCESS);
 	assert(vec->capacity == 10);
-	assert(vec->lenght == 0);
+	assert(vec->length == 0);
 
 	i = 2;
 	assert(ds_vector_insert(vec, &i, DS_AT_END) == DS_SUCESS);
@@ -18,9 +18,9 @@ int main(void)
 	i = 1;
 	assert(ds_vector_insert(vec, &i, 1) == DS_SUCESS);
 
-	assert(vec->lenght == 3);
+	assert(vec->length == 3);
 
-	for (int i = 0; i < vec->lenght; i++)
+	for (int i = 0; i < vec->length; i++)
 		assert(((int *)vec->data)[i] == i);
 
 	i = 1;
@@ -31,7 +31,7 @@ int main(void)
 	assert(ds_vector_remove(vec, DS_AT_START, false) == DS_SUCESS);
 	assert(ds_vector_remove(vec, DS_AT_END, true) == DS_SUCESS);
 
-	assert(vec->lenght == 0);
+	assert(vec->length == 0);
 	assert(vec->capacity == 0);
 
 	return EXIT_SUCCESS;

@@ -5,7 +5,7 @@
 #include "dsa_memory_manager.h"
 
 typedef struct _ds_vector {
-	unsigned lenght;
+	unsigned length;
 	unsigned capacity;
 	size_t elem_size;
 
