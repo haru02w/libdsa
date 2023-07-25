@@ -5,5 +5,6 @@
 #include "dsa_extra.h"
 #include "dsa_memory_manager.h"
 #include "dsa_vector.h"
+#include "dsa_array.h"
 
 #endif // !DSA_H_

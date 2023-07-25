@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <dsa.h>
 #include <stdbool.h>
-int main(void)
+
+int test_vector(void)
 {
 	int i;
 	ds_vector_t *vec = ds_new_vector(sizeof(int));
