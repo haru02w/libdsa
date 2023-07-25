@@ -1,9 +1,15 @@
+#include "dsa_error.h"
 #include "dsa_extra.h"
 #include <stddef.h>
 #include <string.h>
-void ds_array_insertion_sort(void *array, unsigned length, size_t size,
-			     int (*compare)(const void *, const void *))
+ds_error_t ds_array_insertion_sort(void *array, unsigned length, size_t size,
+				   int (*compare)(const void *, const void *))
 {
+	if (array == NULL || compare == NULL)
+		return DS_INVALID_POINTER;
+	if (length <= 0 || size <= 0)
+		return DS_INVALID_SIZE;
+
 	ds_byte_t *arr = array;
 	// start at the second element (first is already a sorted sublist)
 	for (int i = 1; i < length; i++) {
@@ -23,4 +29,5 @@ void ds_array_insertion_sort(void *array, unsigned length, size_t size,
 
 		memcpy(arr + (j + 1) * size, buffer, size);
 	}
+	return DS_SUCESS;
 }
