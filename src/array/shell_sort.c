@@ -3,10 +3,17 @@
 #include <stddef.h>
 #include "dsa_error.h"
 
-// NOTE: implement user defined gaps and optimize _swap with buffer
+static inline int _default_gap(void *arr, int length)
+{
+	static int prev_gap = -1;
+	if (prev_gap < 0)
+		prev_gap = length;
+	return prev_gap >>= 1;
+}
 
-ds_error_t ds_array_shell_sort(void *array, unsigned length, size_t size,
-			       int (*compare)(const void *, const void *))
+ds_error_t ds_array_shell_sort_gaps(void *array, unsigned length, size_t size,
+				    ds_comparator_ft *compare,
+				    int gaps(void *arr, int length))
 {
 	if (array == NULL || compare == NULL)
 		return DS_INVALID_POINTER;
@@ -15,7 +22,7 @@ ds_error_t ds_array_shell_sort(void *array, unsigned length, size_t size,
 
 	ds_byte_t *arr = array;
 	// `x >> 1` == `x / 2`
-	for (int gap = length >> 1; gap > 0; gap >>= 1)
+	for (int gap = gaps(arr, length); gap > 0; gap = gaps(arr, length))
 		for (int i = gap; i < length; i++) {
 			for (int j = i - gap;
 			     j >= 0 && compare(arr + j * size,
@@ -25,4 +32,11 @@ ds_error_t ds_array_shell_sort(void *array, unsigned length, size_t size,
 				      size);
 		}
 	return DS_SUCESS;
+}
+
+ds_error_t ds_array_shell_sort(void *array, unsigned length, size_t size,
+			       ds_comparator_ft *compare)
+{
+	return ds_array_shell_sort_gaps(array, length, size, compare,
+					_default_gap);
 }

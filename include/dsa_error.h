@@ -7,6 +7,7 @@ typedef enum {
 	DS_INDEX_OUT_OF_BOUNDS,
 	DS_INVALID_POINTER,
 	DS_INVALID_SIZE,
+	DS_INSUFFICIENT_MEMORY,
 } ds_error_t;
 
 #endif // !DSA_ERROR_H_

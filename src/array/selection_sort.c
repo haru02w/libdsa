@@ -5,7 +5,7 @@
 #include "array.h"
 
 ds_error_t ds_array_selection_sort(void *array, unsigned length, size_t size,
-				   int (*compare)(const void *, const void *))
+				   ds_comparator_ft *compare)
 {
 	if (array == NULL || compare == NULL)
 		return DS_INVALID_POINTER;
@@ -15,7 +15,7 @@ ds_error_t ds_array_selection_sort(void *array, unsigned length, size_t size,
 	ds_byte_t *arr = array;
 	for (int i = 0; i < length - 1; i++) {
 		int min_index = i;
-		for (int j = i + 1; j < size; j++) {
+		for (int j = i + 1; j < length; j++) {
 			if (compare(arr + min_index * size, arr + j * size) > 0)
 				min_index = j;
 		}

@@ -8,11 +8,11 @@ Data Structure and Algorithms Library
 - [ ] Arrays
     - [x] Dynamic Arrays (Vector)
     - [ ] Sorting Algorithms
-        - [ ] Insertion Sort
-        - [ ] Selection Sort
-        - [ ] Bubble Sort
-        - [ ] Merge Sort
-        - [ ] Shell sort
+        - [x] Insertion Sort
+        - [x] Selection Sort
+        - [x] Bubble Sort
+        - [~] Merge Sort
+        - [x] Shell sort
         - [ ] Quick Sort
         - [ ] Heap Sort
         - [ ] Radix Sort

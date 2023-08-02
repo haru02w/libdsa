@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <string.h>
 ds_error_t ds_array_insertion_sort(void *array, unsigned length, size_t size,
-				   int (*compare)(const void *, const void *))
+				   ds_comparator_ft *compare)
 {
 	if (array == NULL || compare == NULL)
 		return DS_INVALID_POINTER;

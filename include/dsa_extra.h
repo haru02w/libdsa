@@ -11,4 +11,7 @@ enum dsIndex {
 	DS_AT_END = -1,
 };
 
+// Function pointer type to compare elements
+typedef int ds_comparator_ft(const void *, const void *);
+
 #endif // !DSA_EXTRA_H_
