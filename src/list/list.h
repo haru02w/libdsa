@@ -11,7 +11,7 @@ typedef struct _ds_list_node {
 	ds_byte_t data[]; // flexible array members
 } _ds_list_node_t;
 
-typedef struct _ds_dllist {
+typedef struct _ds_list {
 	unsigned length;
 	size_t elem_size;
 
@@ -19,6 +19,6 @@ typedef struct _ds_dllist {
 
 	_ds_list_node_t *_head;
 	_ds_list_node_t *_tail;
-} _ds_dllist_t;
+} _ds_list_t;
 
 #endif // !LIST_H_

@@ -1,7 +1,7 @@
 #include "dsa_extra.h"
 #include <stddef.h>
 #include <string.h>
-void _swap(void *ptr1, void *ptr2, size_t size)
+void _ds_swap(void *ptr1, void *ptr2, size_t size)
 {
 	ds_byte_t buffer[size];
 	memcpy(buffer, ptr1, size);

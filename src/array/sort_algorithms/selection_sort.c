@@ -20,7 +20,7 @@ ds_error_t ds_array_selection_sort(void *array, unsigned length, size_t size,
 				min_index = j;
 		}
 		if (min_index != i)
-			_swap(arr + i * size, arr + min_index * size, size);
+			_ds_swap(arr + i * size, arr + min_index * size, size);
 	}
-	return DS_SUCESS;
+	return DS_SUCCESS;
 }

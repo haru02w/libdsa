@@ -7,6 +7,8 @@
 ds_vector_t *ds_new_vector(size_t elem_size)
 {
 	_ds_vector_t *new = gmm.malloc(sizeof(ds_vector_t));
+	if (new == NULL)
+		return NULL;
 	*new = (_ds_vector_t){
 		.length = 0,
 		.capacity = 0,
@@ -20,6 +22,8 @@ ds_vector_t *ds_new_vector(size_t elem_size)
 ds_vector_t *ds_new_vector_mm(size_t elem_size, ds_memory_manager_t *mm)
 {
 	_ds_vector_t *new = mm->malloc(sizeof(ds_vector_t));
+	if (new == NULL)
+		return NULL;
 	*new = (_ds_vector_t){
 		.length = 0,
 		.capacity = 0,
@@ -30,14 +34,15 @@ ds_vector_t *ds_new_vector_mm(size_t elem_size, ds_memory_manager_t *mm)
 	return (ds_vector_t *)new;
 }
 
-void ds_delete_vector(ds_vector_t *vec)
+void ds_delete_vector(ds_vector_t **vec)
 {
 	if (vec == NULL)
 		return;
 
-	const ds_memory_manager_t *mm = vec->_mm;
-	mm->free(vec->data);
-	mm->free(vec);
+	const ds_memory_manager_t *mm = (*vec)->_mm;
+	mm->free((*vec)->data);
+	mm->free(*vec);
+	*vec = NULL;
 }
 
 ds_error_t ds_vector_set_capacity(ds_vector_t *vec, unsigned capacity_length)
@@ -53,11 +58,11 @@ ds_error_t ds_vector_set_capacity(ds_vector_t *vec, unsigned capacity_length)
 	if (new_space == NULL)
 		return DS_FAILURE;
 
-	_ds_vector_t *mut_vec = (_ds_vector_t *)vec;
-	mut_vec->capacity = capacity_length;
-	mut_vec->data = (ds_byte_t *)new_space;
+	_ds_vector_t *_vec = (_ds_vector_t *)vec;
+	_vec->capacity = capacity_length;
+	_vec->data = (ds_byte_t *)new_space;
 
-	return DS_SUCESS;
+	return DS_SUCCESS;
 }
 
 ds_error_t ds_vector_insert(ds_vector_t *vec, void *data, int index)
@@ -91,9 +96,9 @@ ds_error_t ds_vector_insert(ds_vector_t *vec, void *data, int index)
 		memcpy(vec->data + index * vec->elem_size, data,
 		       vec->elem_size);
 	}
-	_ds_vector_t *mut_vec = (_ds_vector_t *)vec;
-	++mut_vec->length;
-	return DS_SUCESS;
+	_ds_vector_t *_vec = (_ds_vector_t *)vec;
+	++_vec->length;
+	return DS_SUCCESS;
 }
 
 ds_error_t ds_vector_remove(ds_vector_t *vec, int index, ds_bool_t shrink)
@@ -116,16 +121,16 @@ ds_error_t ds_vector_remove(ds_vector_t *vec, int index, ds_bool_t shrink)
 			vec->data + (index + 1) * vec->elem_size,
 			(vec->length - index - 1) * vec->elem_size);
 	}
-	_ds_vector_t *mut_vec = (_ds_vector_t *)vec;
-	--mut_vec->length;
+	_ds_vector_t *_vec = (_ds_vector_t *)vec;
+	--_vec->length;
 
 	if (shrink) {
 		void *new_space = vec->_mm->realloc(
 			vec->data, vec->length * vec->elem_size);
 		if (new_space == NULL && vec->length > 0)
 			return DS_FAILURE;
-		mut_vec->data = new_space;
-		mut_vec->capacity = vec->length;
+		_vec->data = new_space;
+		_vec->capacity = vec->length;
 	}
-	return DS_SUCESS;
+	return DS_SUCCESS;
 }

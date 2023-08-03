@@ -1,3 +1,4 @@
+#include "dsa_memory_manager.h"
 #include <stdlib.h>
 #include <string.h>
 #include "dsa_error.h"
@@ -33,7 +34,7 @@ static void _merge_sort_recursion(ds_byte_t *arr, ds_byte_t *aux_arr,
 
 	if (end - begin == 1 &&
 	    compare(arr + begin * size, arr + end * size) > 0) {
-		_swap(arr + begin * size, arr + end * size, size);
+		_ds_swap(arr + begin * size, arr + end * size, size);
 		return;
 	}
 
@@ -55,7 +56,7 @@ ds_error_t ds_array_merge_sort_recursive(void *array, unsigned length,
 		return DS_INVALID_SIZE;
 
 	ds_byte_t *arr = array;
-	ds_byte_t *aux_arr = malloc(length * size);
+	ds_byte_t *aux_arr = gmm.malloc(length * size);
 	if (aux_arr == NULL)
 		return DS_INSUFFICIENT_MEMORY;
 	memcpy(aux_arr, arr, length * size);
@@ -67,5 +68,5 @@ ds_error_t ds_array_merge_sort_recursive(void *array, unsigned length,
 		    arr + (middle_index + 1) * size) > 0)
 		memcpy(arr, aux_arr, length * size);
 	free(aux_arr);
-	return DS_SUCESS;
+	return DS_SUCCESS;
 }

@@ -29,5 +29,5 @@ ds_error_t ds_array_insertion_sort(void *array, unsigned length, size_t size,
 
 		memcpy(arr + (j + 1) * size, buffer, size);
 	}
-	return DS_SUCESS;
+	return DS_SUCCESS;
 }

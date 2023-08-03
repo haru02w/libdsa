@@ -16,7 +16,7 @@ ds_error_t ds_array_bubble_sort(void *array, unsigned length, size_t size,
 		ds_bool_t swapped = DS_FALSE;
 		for (int j = 0; j < length - 1 - i; j++) {
 			if (compare(arr + j * size, arr + (j + 1) * size) > 0) {
-				_swap(arr + j * size, arr + (j + 1) * size,
+				_ds_swap(arr + j * size, arr + (j + 1) * size,
 				      size);
 				swapped = DS_TRUE;
 			}
@@ -24,5 +24,5 @@ ds_error_t ds_array_bubble_sort(void *array, unsigned length, size_t size,
 		if (swapped == DS_FALSE)
 			break;
 	}
-	return DS_SUCESS;
+	return DS_SUCCESS;
 }
