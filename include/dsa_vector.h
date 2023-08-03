@@ -9,7 +9,7 @@ typedef struct ds_vector {
 	const unsigned capacity;
 	const size_t elem_size;
 
-	const ds_memory_manager_t *_mm;
+	const ds_memory_manager_t *const _mm;
 
 	ds_byte_t *const data;
 

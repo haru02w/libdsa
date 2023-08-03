@@ -2,7 +2,7 @@
 #include <string.h>
 #include "dsa_error.h"
 #include "dsa_extra.h"
-#include "array.h"
+#include "../array.h"
 
 static void _merge(ds_byte_t *arr, ds_byte_t *aux_arr, size_t size, int begin,
 		   int middle, int end, ds_comparator_ft *compare)

@@ -1,7 +1,7 @@
-#include "array.h"
-#include "dsa_extra.h"
 #include <stddef.h>
 #include "dsa_error.h"
+#include "dsa_extra.h"
+#include "../array.h"
 
 static inline int _default_gap(void *arr, int length)
 {

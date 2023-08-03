@@ -2,7 +2,7 @@
 #include <string.h>
 #include "dsa_error.h"
 #include "dsa_extra.h"
-#include "array.h"
+#include "../array.h"
 
 ds_error_t ds_array_selection_sort(void *array, unsigned length, size_t size,
 				   ds_comparator_ft *compare)
