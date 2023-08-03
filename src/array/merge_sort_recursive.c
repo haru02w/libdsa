@@ -31,7 +31,8 @@ static void _merge_sort_recursion(ds_byte_t *arr, ds_byte_t *aux_arr,
 	if (begin >= end)
 		return;
 
-	if (end - begin == 1 && compare(arr + begin * size, arr + end * size)) {
+	if (end - begin == 1 &&
+	    compare(arr + begin * size, arr + end * size) > 0) {
 		_swap(arr + begin * size, arr + end * size, size);
 		return;
 	}
@@ -39,8 +40,9 @@ static void _merge_sort_recursion(ds_byte_t *arr, ds_byte_t *aux_arr,
 	// same as `(begin + end) / 2`
 	int middle = begin + ((end - begin) >> 1);
 
-	_merge_sort_recursion(arr, aux_arr, size, begin, middle, compare);
-	_merge_sort_recursion(arr, aux_arr, size, middle + 1, end, compare);
+	// swap `arr` with `aux_arr` to avoid unecessary copies
+	_merge_sort_recursion(aux_arr, arr, size, begin, middle, compare);
+	_merge_sort_recursion(aux_arr, arr, size, middle + 1, end, compare);
 	_merge(arr, aux_arr, size, begin, middle, end, compare);
 }
 
@@ -56,9 +58,10 @@ ds_error_t ds_array_merge_sort_recursive(void *array, unsigned length,
 	ds_byte_t *aux_arr = malloc(length * size);
 	if (aux_arr == NULL)
 		return DS_INSUFFICIENT_MEMORY;
-
+	memcpy(aux_arr, arr, length * size);
 	_merge_sort_recursion(arr, aux_arr, size, 0, length - 1, compare);
 
+	// copies to `arr` in case the result is in `aux_arr`
 	unsigned middle_index = (length - 1) / 2;
 	if (compare(arr + middle_index * size,
 		    arr + (middle_index + 1) * size) > 0)

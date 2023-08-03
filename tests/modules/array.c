@@ -39,9 +39,8 @@ int test_array(void)
 	test_sort_algorithm(arr, (sizeof arr / sizeof arr[0]), sizeof arr[0],
 			    compare, ds_array_shell_sort);
 
-	// TODO:
-	/* test_sort_algorithm(arr, (sizeof arr / sizeof arr[0]), sizeof arr[0],
-			    compare, ds_array_merge_sort_recursive); */
+	test_sort_algorithm(arr, (sizeof arr / sizeof arr[0]), sizeof arr[0],
+			    compare, ds_array_merge_sort_recursive);
 
 	return EXIT_SUCCESS;
 }
