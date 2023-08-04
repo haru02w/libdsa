@@ -1,7 +1,7 @@
 #include "dsa_memory_manager.h"
 #include <stdlib.h>
 
-ds_memory_manager_t gmm = {
+const ds_memory_manager_t _ds_gmm = {
 	.free = free,
 	.calloc = calloc,
 	.malloc = malloc,

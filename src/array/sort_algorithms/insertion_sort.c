@@ -1,7 +1,8 @@
-#include "dsa_error.h"
-#include "dsa_extra.h"
 #include <stddef.h>
 #include <string.h>
+#include "dsa_array.h"
+#include "dsa_error.h"
+#include "dsa_extra.h"
 ds_error_t ds_array_insertion_sort(void *array, unsigned length, size_t size,
 				   ds_comparator_ft *compare)
 {
@@ -12,7 +13,7 @@ ds_error_t ds_array_insertion_sort(void *array, unsigned length, size_t size,
 
 	ds_byte_t *arr = array;
 	// start at the second element (first is already a sorted sublist)
-	for (int i = 1; i < length; i++) {
+	for (int i = 1; i < (int)length; i++) {
 		int j = i - 1;
 		// buffer to store the next element to be inserted
 		ds_byte_t buffer[size];

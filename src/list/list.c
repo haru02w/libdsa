@@ -4,13 +4,13 @@
 
 ds_list_t *ds_new_list(size_t elem_size)
 {
-	_ds_list_t *new = gmm.malloc(sizeof(_ds_list_t));
+	_ds_list_t *new = _ds_gmm.malloc(sizeof(_ds_list_t));
 	if (new == NULL)
 		return NULL;
 	*new = (_ds_list_t){
 		.length = 0,
 		.elem_size = elem_size,
-		._mm = &gmm,
+		._mm = (ds_memory_manager_t *)&_ds_gmm,
 		._head = NULL,
 		._tail = NULL,
 	};
@@ -19,7 +19,7 @@ ds_list_t *ds_new_list(size_t elem_size)
 
 ds_list_t *ds_new_list_mm(size_t elem_size, ds_memory_manager_t *mm)
 {
-	_ds_list_t *new = gmm.malloc(sizeof(_ds_list_t));
+	_ds_list_t *new = _ds_gmm.malloc(sizeof(_ds_list_t));
 	if (new == NULL)
 		return NULL;
 	*new = (_ds_list_t){
@@ -49,13 +49,13 @@ void ds_delete_list(ds_list_t **list)
 	*list = NULL;
 }
 
-ds_error_t ds_list_insert()
+ds_error_t ds_list_insert(void)
 {
 	// TODO:
 	return DS_SUCCESS;
 }
 
-ds_error_t ds_list_remove()
+ds_error_t ds_list_remove(void)
 {
 	// TODO:
 	return DS_SUCCESS;

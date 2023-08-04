@@ -20,7 +20,7 @@ ds_error_t ds_array_merge_sort_recursive(void *array, unsigned length,
 
 ds_error_t ds_array_shell_sort_gaps(void *array, unsigned length, size_t size,
 				    ds_comparator_ft *compare,
-				    int gaps(void *arr, int length));
+				    int gaps(const void *arr, int length));
 ds_error_t ds_array_shell_sort(void *array, unsigned length, size_t size,
 			       ds_comparator_ft *compare);
 #endif // !DSA_ARRAY_H_

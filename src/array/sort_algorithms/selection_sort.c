@@ -2,6 +2,7 @@
 #include <string.h>
 #include "dsa_error.h"
 #include "dsa_extra.h"
+#include "dsa_array.h"
 #include "../array.h"
 
 ds_error_t ds_array_selection_sort(void *array, unsigned length, size_t size,
@@ -13,9 +14,9 @@ ds_error_t ds_array_selection_sort(void *array, unsigned length, size_t size,
 		return DS_INVALID_SIZE;
 
 	ds_byte_t *arr = array;
-	for (int i = 0; i < length - 1; i++) {
+	for (int i = 0; i < (int)length - 1; i++) {
 		int min_index = i;
-		for (int j = i + 1; j < length; j++) {
+		for (int j = i + 1; j < (int)length; j++) {
 			if (compare(arr + min_index * size, arr + j * size) > 0)
 				min_index = j;
 		}

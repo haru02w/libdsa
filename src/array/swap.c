@@ -1,6 +1,7 @@
-#include "dsa_extra.h"
 #include <stddef.h>
 #include <string.h>
+#include "dsa_extra.h"
+#include "./array.h"
 void _ds_swap(void *ptr1, void *ptr2, size_t size)
 {
 	ds_byte_t buffer[size];

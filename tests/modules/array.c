@@ -2,13 +2,19 @@
 #include <stdlib.h>
 #include <dsa.h>
 #include <string.h>
+#include "../tests.h"
 #define ARRLEN(x) (sizeof x / sizeof x[0])
 
+int compare(const void *n1, const void *n2);
 int compare(const void *n1, const void *n2)
 {
 	return *(int *)n1 - *(int *)n2;
 }
 
+void test_sort_algorithm(void *array, unsigned length, size_t size,
+			 ds_comparator_ft *compare,
+			 ds_error_t (*sort_algorithm)(void *, unsigned, size_t,
+						      ds_comparator_ft *));
 void test_sort_algorithm(void *array, unsigned length, size_t size,
 			 ds_comparator_ft *compare,
 			 ds_error_t (*sort_algorithm)(void *, unsigned, size_t,
@@ -18,7 +24,7 @@ void test_sort_algorithm(void *array, unsigned length, size_t size,
 	memcpy(test_array, array, length * size);
 
 	sort_algorithm(test_array, length, size, compare);
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < (int)length; i++)
 		assert(compare(test_array + i * size, &i) == 0);
 	free(test_array);
 }

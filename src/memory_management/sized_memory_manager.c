@@ -1,6 +1,6 @@
-#include "dsa_memory_manager.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include "dsa_memory_manager.h"
 
 void *ds_malloc(size_t size)
 {

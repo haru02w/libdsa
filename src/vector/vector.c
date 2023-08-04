@@ -6,13 +6,13 @@
 
 ds_vector_t *ds_new_vector(size_t elem_size)
 {
-	_ds_vector_t *new = gmm.malloc(sizeof(ds_vector_t));
+	_ds_vector_t *new = _ds_gmm.malloc(sizeof(ds_vector_t));
 	if (new == NULL)
 		return NULL;
 	*new = (_ds_vector_t){
 		.length = 0,
 		.capacity = 0,
-		._mm = &gmm,
+		._mm = (ds_memory_manager_t *)&_ds_gmm,
 		.elem_size = elem_size,
 		.data = NULL,
 	};

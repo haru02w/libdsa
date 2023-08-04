@@ -1,9 +1,9 @@
-#include "dsa_vector.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <dsa.h>
 #include <stdbool.h>
+#include "../tests.h"
 
 int test_vector(void)
 {
@@ -22,7 +22,7 @@ int test_vector(void)
 
 	assert(vec->length == 3);
 
-	for (int i = 0; i < vec->length; i++)
+	for (int i = 0; i < (int)vec->length; i++)
 		assert(((int *)vec->data)[i] == i);
 
 	i = 1;
