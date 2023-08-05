@@ -1,5 +1,7 @@
 ## Data Structure and Algorithms Library
 
+#### <span style="color:red"> Project halted because my lack of time and contributors </span>
+
 #### How to use it
 
 ```sh

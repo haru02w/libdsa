@@ -6,9 +6,14 @@ typedef unsigned char ds_byte_t;
 typedef enum { DS_FALSE, DS_TRUE } ds_bool_t;
 
 // General purpose index specifier
-enum dsIndex {
-	DS_AT_START = -2,
+enum ds_abs_pos {
+	DS_AT_START = -4,
 	DS_AT_END = -1,
+};
+
+enum ds_rel_pos {
+	DS_BEFORE = -3,
+	DS_AFTER = -2,
 };
 
 // Function pointer type to compare elements

@@ -15,10 +15,10 @@ typedef struct _ds_list {
 	unsigned length;
 	size_t elem_size;
 
-	ds_memory_manager_t *_mm;
+	ds_memory_manager_t *mm;
 
-	_ds_list_node_t *_head;
-	_ds_list_node_t *_tail;
+	_ds_list_node_t *head;
+	_ds_list_node_t *tail;
 } _ds_list_t;
 
 #endif // !LIST_H_
